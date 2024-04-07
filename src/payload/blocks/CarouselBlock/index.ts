@@ -5,22 +5,6 @@ import { invertBackground } from '../../fields/invertBackground'
 export const CarouselBlock: Block = {
   slug: 'carouselBlock',
   fields: [
-    invertBackground,
-    {
-      name: 'position',
-      type: 'select',
-      defaultValue: 'default',
-      options: [
-        {
-          label: 'Default',
-          value: 'default',
-        },
-        {
-          label: 'Fullscreen',
-          value: 'fullscreen',
-        },
-      ],
-    },
     {
       name: 'slides',
       label: 'Slides',
@@ -36,6 +20,7 @@ export const CarouselBlock: Block = {
         {
           name: 'caption',
           type: 'text',
+          required: false,
         },
         {
           name: 'captionPosition',
@@ -58,6 +43,22 @@ export const CarouselBlock: Block = {
               value: 'bottom-right',
             },
           ],
+        },
+      ],
+    },
+    invertBackground,
+    {
+      name: 'position',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        {
+          label: 'Default',
+          value: 'default',
+        },
+        {
+          label: 'Fullscreen',
+          value: 'fullscreen',
         },
       ],
     },
@@ -108,6 +109,12 @@ export const CarouselBlock: Block = {
       label: 'Slides To Scroll',
       type: 'number',
       defaultValue: 1,
+    },
+    {
+      name: 'height',
+      label: 'Height (in px)',
+      type: 'number',
+      defaultValue: 800,
     },
   ],
 }

@@ -1487,6 +1487,7 @@ type CarouselBlock {
   infinite: Boolean
   slidesToShow: Float
   slidesToScroll: Float
+  height: Float
   id: String
   blockName: String
   blockType: String

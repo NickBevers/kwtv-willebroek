@@ -2,6 +2,7 @@ import { CATEGORIES } from './categories'
 import { LINK_FIELDS } from './link'
 import { MEDIA } from './media'
 import { META } from './meta'
+import { SLIDES } from './parts/slides'
 
 export const CALL_TO_ACTION = `
 ...on Cta {
@@ -81,5 +82,23 @@ export const ARCHIVE_BLOCK = `
     }
   }
   populatedDocsTotal
+}
+`
+
+export const CAROUSEL_BLOCK = `
+...on CarouselBlock {
+  blockType
+  invertBackground
+ ${SLIDES}
+  showArrows
+  showDots
+  autoplay
+  autoplaySpeed
+  pauseOnHover
+  infinite
+  slidesToShow
+  slidesToScroll
+  id
+  height
 }
 `

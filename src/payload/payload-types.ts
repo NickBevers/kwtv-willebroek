@@ -173,6 +173,7 @@ export interface Page {
         infinite?: boolean | null;
         slidesToShow?: number | null;
         slidesToScroll?: number | null;
+        height?: number | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'carouselBlock';
