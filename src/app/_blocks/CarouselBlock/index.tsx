@@ -17,6 +17,8 @@ export const CarouselBlock: React.FC<Props> = ({
   height,
   showArrows,
   showDots,
+  autoplay,
+  autoplaySpeed,
 }) => {
   const [activeSlide, setActiveSlide] = useState<number>(0)
 
@@ -27,6 +29,15 @@ export const CarouselBlock: React.FC<Props> = ({
   const handleNext = () => {
     setActiveSlide(prev => (prev + 1) % slides.length)
   }
+
+  useEffect(() => {
+    if (autoplay) {
+      const interval = setInterval(() => {
+        setActiveSlide(prev => (prev + 1) % slides.length)
+      }, autoplaySpeed ?? 3000)
+      return () => clearInterval(interval)
+    }
+  }, [autoplay, autoplaySpeed, slides.length])
 
   useEffect(() => {
     document.documentElement.style.setProperty('--slide', activeSlide.toString())

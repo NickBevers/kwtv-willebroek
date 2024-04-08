@@ -1,3 +1,5 @@
+@import '../../_css/common';
+
 .carousel{
   position: relative;
   display: flex;
@@ -87,6 +89,11 @@
 
   &.active{
     background-color: var(--color-secondary);
+  }
+
+  @include small-break {
+    width: 8px;
+    height: 8px;
   }
 }
 

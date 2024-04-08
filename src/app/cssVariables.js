@@ -7,6 +7,8 @@ module.exports = {
     l: 1440,
   },
   colors: {
+    primary: 'rgb(25, 96, 158)',
+    secondary: 'rgb(62, 171, 208)',
     base0: 'rgb(255, 255, 255)',
     base100: 'rgb(235, 235, 235)',
     base500: 'rgb(128, 128, 128)',
