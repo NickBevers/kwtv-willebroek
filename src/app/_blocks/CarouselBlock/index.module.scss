@@ -47,7 +47,7 @@
 .control{
   cursor: pointer;
   pointer-events: auto;
-  padding: 10px;
+  padding: 0.5rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border-radius: 50%;
@@ -58,6 +58,36 @@
     background-color: rgba(0, 0, 0, 0.7);
   }
 
+}
+
+.dots{
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot{
+  cursor: pointer;
+  pointer-events: auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ffffff80;
+  margin: 0 5px;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover{
+    background-color: #ffffff;
+  }
+
+  &.active{
+    background-color: var(--color-secondary);
+  }
 }
 
 .caption{
