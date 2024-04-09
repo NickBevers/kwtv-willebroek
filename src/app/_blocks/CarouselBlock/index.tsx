@@ -57,7 +57,7 @@ export const CarouselBlock: React.FC<Props> = ({
       <Gutter>
         <div
           className={classes.carousel}
-          style={height ? { maxHeight: height } : {}}
+          style={height && height > 0 ? { height: height, maxHeight: height } : { height: 'auto' }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

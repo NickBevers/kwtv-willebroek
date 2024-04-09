@@ -114,7 +114,7 @@ export const CarouselBlock: Block = {
       name: 'height',
       label: 'Height (in px)',
       type: 'number',
-      defaultValue: 800,
+      defaultValue: 0,
     },
   ],
 }
