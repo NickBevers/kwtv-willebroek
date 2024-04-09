@@ -21,6 +21,7 @@ export const CarouselBlock: React.FC<Props> = ({
   autoplaySpeed,
 }) => {
   const [activeSlide, setActiveSlide] = useState<number>(0)
+  const [pauseAutoplay, setPauseAutoplay] = useState<boolean>(false)
 
   const handlePrev = () => {
     setActiveSlide(prev => (prev - 1 + slides.length) % slides.length)
@@ -31,13 +32,21 @@ export const CarouselBlock: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (autoplay) {
+    if (autoplay && !pauseAutoplay) {
       const interval = setInterval(() => {
         setActiveSlide(prev => (prev + 1) % slides.length)
       }, autoplaySpeed ?? 3000)
       return () => clearInterval(interval)
     }
-  }, [autoplay, autoplaySpeed, slides.length])
+  }, [autoplay, autoplaySpeed, pauseAutoplay, slides.length])
+
+  const handleMouseEnter = () => {
+    if (autoplay) setPauseAutoplay(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (autoplay) setPauseAutoplay(false)
+  }
 
   useEffect(() => {
     document.documentElement.style.setProperty('--slide', activeSlide.toString())
@@ -46,7 +55,12 @@ export const CarouselBlock: React.FC<Props> = ({
   return (
     <div className={classes[position]}>
       <Gutter>
-        <div className={classes.carousel} style={height ? { maxHeight: height } : {}}>
+        <div
+          className={classes.carousel}
+          style={height ? { maxHeight: height } : {}}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {showArrows && (
             <div className={classes.controls}>
               <svg
