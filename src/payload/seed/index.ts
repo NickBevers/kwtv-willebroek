@@ -14,7 +14,7 @@ import { project2 } from './project-2'
 import { project3 } from './project-3'
 import { projectsPage } from './projects-page'
 
-const collections = ['categories', 'media', 'pages', 'posts', 'projects', 'comments']
+const collections = ['categories', 'media', 'pages', 'posts', 'projects']
 const globals = ['header', 'settings', 'footer']
 
 // Next.js revalidation errors are normal when seeding the database without a server running
@@ -69,7 +69,7 @@ export const seed = async (payload: Payload): Promise<void> => {
     }),
   )
 
-  let [{ id: demoAuthorID }, { id: demoUserID }] = await Promise.all([
+  let [{ id: demoAuthorID }] = await Promise.all([
     await payload.create({
       collection: 'users',
       data: {
@@ -193,8 +193,6 @@ export const seed = async (payload: Payload): Promise<void> => {
     ),
   })
 
-  const posts = [post1Doc, post2Doc, post3Doc]
-
   // update each post with related posts
 
   await Promise.all([
@@ -220,25 +218,6 @@ export const seed = async (payload: Payload): Promise<void> => {
       },
     }),
   ])
-
-  payload.logger.info(`— Seeding comments...`)
-
-  await Promise.all(
-    posts.map(
-      async (post, index) =>
-        await payload.create({
-          collection: 'comments',
-          data: {
-            _status: 'published',
-            comment: `This is a comment on post ${
-              index + 1
-            }. It has been approved by an admin and is now visible to the public. You can leave your own comment on this post using the form below.`,
-            user: demoUserID,
-            doc: post.id,
-          },
-        }),
-    ),
-  )
 
   payload.logger.info(`— Seeding projects...`)
 

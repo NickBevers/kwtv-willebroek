@@ -3,8 +3,7 @@ import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-import { Comment, Post } from '../../../../payload/payload-types'
-import { fetchComments } from '../../../_api/fetchComments'
+import type { Post } from '../../../../payload/payload-types'
 import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
 import { Blocks } from '../../../_components/Blocks'
@@ -35,10 +34,6 @@ export default async function Post({ params: { slug } }) {
     notFound()
   }
 
-  const comments = await fetchComments({
-    doc: post?.id,
-  })
-
   const { layout, relatedPosts, enablePremiumContent, premiumContent } = post
 
   return (
@@ -49,43 +44,6 @@ export default async function Post({ params: { slug } }) {
       <Blocks
         disableTopPadding
         blocks={[
-          {
-            blockType: 'comments',
-            blockName: 'Comments',
-            relationTo: 'posts',
-            introContent: [
-              {
-                type: 'h4',
-                children: [
-                  {
-                    text: 'Comments',
-                  },
-                ],
-              },
-              {
-                type: 'p',
-                children: [
-                  {
-                    text: 'Authenticated users can leave comments on this post. All new comments are given the status "draft" until they are approved by an admin. Draft comments are not accessible to the public and will not show up on this page until it is marked as "published". To manage all comments, ',
-                  },
-                  {
-                    type: 'link',
-                    url: '/admin/collections/comments',
-                    children: [
-                      {
-                        text: 'navigate to the admin dashboard',
-                      },
-                    ],
-                  },
-                  {
-                    text: '.',
-                  },
-                ],
-              },
-            ],
-            doc: post,
-            comments,
-          },
           {
             blockType: 'relatedPosts',
             blockName: 'Related Posts',

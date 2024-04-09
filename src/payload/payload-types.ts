@@ -14,7 +14,6 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
-    comments: Comment;
     redirects: Redirect;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -155,8 +154,6 @@ export interface Page {
         blockType: 'archive';
       }
     | {
-        invertBackground?: boolean | null;
-        position?: ('default' | 'fullscreen') | null;
         slides?:
           | {
               image: string | Media;
@@ -165,6 +162,8 @@ export interface Page {
               id?: string | null;
             }[]
           | null;
+        invertBackground?: boolean | null;
+        position?: ('default' | 'fullscreen') | null;
         showArrows?: boolean | null;
         showDots?: boolean | null;
         autoplay?: boolean | null;
@@ -637,23 +636,6 @@ export interface Project {
     description?: string | null;
     image?: string | Media | null;
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "comments".
- */
-export interface Comment {
-  id: string;
-  user?: (string | null) | User;
-  populatedUser?: {
-    id?: string | null;
-    name?: string | null;
-  };
-  doc?: (string | null) | Post;
-  comment?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
