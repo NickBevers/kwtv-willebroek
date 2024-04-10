@@ -48,6 +48,8 @@ body {
   font-family: var(--font-body);
   margin: 0;
   color: var(--theme-text);
+  display: flex;
+  flex-direction: column;
 }
 
 ::selection {

@@ -93,24 +93,6 @@ export const CarouselBlock: Block = {
       defaultValue: true,
     },
     {
-      name: 'infinite',
-      label: 'Infinite',
-      type: 'checkbox',
-      defaultValue: true,
-    },
-    {
-      name: 'slidesToShow',
-      label: 'Slides To Show',
-      type: 'number',
-      defaultValue: 1,
-    },
-    {
-      name: 'slidesToScroll',
-      label: 'Slides To Scroll',
-      type: 'number',
-      defaultValue: 1,
-    },
-    {
       name: 'height',
       label: 'Height (in px)',
       type: 'number',

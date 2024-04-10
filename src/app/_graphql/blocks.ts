@@ -95,9 +95,6 @@ export const CAROUSEL_BLOCK = `
   autoplay
   autoplaySpeed
   pauseOnHover
-  infinite
-  slidesToShow
-  slidesToScroll
   id
   height
 }
