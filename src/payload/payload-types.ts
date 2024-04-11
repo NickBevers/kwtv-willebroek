@@ -158,7 +158,6 @@ export interface Page {
           | {
               image: string | Media;
               caption?: string | null;
-              captionPosition?: ('top-left' | 'top-right' | 'bottom-left' | 'bottom-right') | null;
               id?: string | null;
             }[]
           | null;

@@ -1488,7 +1488,6 @@ type CarouselBlock {
 type CarouselBlock_Slides {
   image(where: CarouselBlock_Slides_Image_where): Media
   caption: String
-  captionPosition: CarouselBlock_Slides_captionPosition
   id: String
 }
 
@@ -1652,13 +1651,6 @@ input CarouselBlock_Slides_Image_where_or {
   id: CarouselBlock_Slides_Image_id_operator
   AND: [CarouselBlock_Slides_Image_where_and]
   OR: [CarouselBlock_Slides_Image_where_or]
-}
-
-enum CarouselBlock_Slides_captionPosition {
-  top_left
-  top_right
-  bottom_left
-  bottom_right
 }
 
 enum CarouselBlock_position {
