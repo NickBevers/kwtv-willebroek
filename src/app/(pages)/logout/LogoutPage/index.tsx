@@ -10,7 +10,7 @@ export const LogoutPage: React.FC<{
   settings: Settings
 }> = props => {
   const { settings } = props
-  const { postsPage, projectsPage } = settings || {}
+  const { postsPage, EventsPage } = settings || {}
   const { logout } = useAuth()
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
@@ -29,7 +29,7 @@ export const LogoutPage: React.FC<{
   }, [logout])
 
   const hasPostsPage = typeof postsPage === 'object' && postsPage?.slug
-  const hasProjectsPage = typeof projectsPage === 'object' && projectsPage?.slug
+  const hasEventsPage = typeof eventsPage === 'object' && eventsPage?.slug
 
   return (
     <Fragment>
@@ -38,16 +38,16 @@ export const LogoutPage: React.FC<{
           <h1>{error || success}</h1>
           <p>
             {'What would you like to do next? '}
-            {hasPostsPage && hasProjectsPage && <Fragment>{'Browse '}</Fragment>}
+            {hasPostsPage && hasEventsPage && <Fragment>{'Browse '}</Fragment>}
             {hasPostsPage && (
               <Fragment>
                 <Link href={`/${postsPage.slug}`}>all posts</Link>
               </Fragment>
             )}
-            {hasPostsPage && hasProjectsPage && <Fragment>{' or '}</Fragment>}
-            {hasProjectsPage && (
+            {hasPostsPage && hasEventsPage && <Fragment>{' or '}</Fragment>}
+            {hasEventsPage && (
               <Fragment>
-                <Link href={`/${projectsPage.slug}`}>all projects</Link>
+                <Link href={`/${EventsPage.slug}`}>all events</Link>
               </Fragment>
             )}
             {` To log back in, `}

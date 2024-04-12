@@ -17,14 +17,14 @@ const BeforeDashboard: React.FC = () => {
       <ul className={`${baseClass}__instructions`}>
         <li>
           <SeedButton />
-          {' with a few pages, posts, and projects to jump-start your new site, then '}
+          {' with a few pages, posts, and events to jump-start your new site, then '}
           <a href="/">visit your website</a>
           {' to see the results.'}
         </li>
         <li>
           If you created this repo using Payload Cloud, head over to GitHub and clone it to your
           local machine. It will be under the <i>GitHub Scope</i> that you selected when creating
-          this project.
+          this event.
         </li>
         <li>
           {'Modify your '}
@@ -54,7 +54,7 @@ const BeforeDashboard: React.FC = () => {
           {' docs.'}
         </li>
         <li>
-          Commit and push your changes to the repository to trigger a redeployment of your project.
+          Commit and push your changes to the repository to trigger a redeployment of your event.
         </li>
       </ul>
       {'Pro Tip: This block is a '}

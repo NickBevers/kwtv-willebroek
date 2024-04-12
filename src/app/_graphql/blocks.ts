@@ -54,7 +54,7 @@ export const ARCHIVE_BLOCK = `
         title
         ${META}
       }
-      ...on Project {
+      ...on Event {
         id
         slug
         title
@@ -72,7 +72,7 @@ export const ARCHIVE_BLOCK = `
         ${CATEGORIES}
         ${META}
       }
-      ...on Project {
+      ...on Event {
         id
         slug
         title
