@@ -1,8 +1,8 @@
 import type { Page } from '../payload-types'
 
-export const projectsPage: Partial<Page> = {
-  title: 'Projects',
-  slug: 'projects',
+export const eventsPage: Partial<Page> = {
+  title: 'events',
+  slug: 'events',
   _status: 'published',
   meta: {
     title: 'Payload Website Template',
@@ -16,7 +16,7 @@ export const projectsPage: Partial<Page> = {
         type: 'h1',
         children: [
           {
-            text: 'All projects',
+            text: 'All events',
           },
         ],
       },
@@ -24,7 +24,7 @@ export const projectsPage: Partial<Page> = {
         type: 'p',
         children: [
           {
-            text: 'This page displays all or some of the projects of your portfolio. Each project is complete with a dynamic page layout builder for a completely custom user experience that is under your full control.',
+            text: 'This page displays all or some of the events of your portfolio. Each event is complete with a dynamic page layout builder for a completely custom user experience that is under your full control.',
           },
         ],
       },
@@ -40,7 +40,7 @@ export const projectsPage: Partial<Page> = {
           type: 'h4',
           children: [
             {
-              text: 'All projects',
+              text: 'All events',
             },
           ],
         },
@@ -48,13 +48,13 @@ export const projectsPage: Partial<Page> = {
           type: 'p',
           children: [
             {
-              text: 'The projects below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or projects can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
+              text: 'The events below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or projects can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
             },
           ],
         },
       ],
       populateBy: 'collection',
-      relationTo: 'projects',
+      relationTo: 'events',
       limit: 10,
       categories: [],
     },

@@ -75,9 +75,9 @@ export const home: Partial<Page> = {
           appearance: 'secondary',
           reference: {
             relationTo: 'pages',
-            value: '{{PROJECTS_PAGE_ID}}',
+            value: '{{EVENTS_PAGE_ID}}',
           },
-          label: 'All projects',
+          label: 'All events',
           url: '',
         },
       },
@@ -123,7 +123,7 @@ export const home: Partial<Page> = {
             {
               children: [
                 {
-                  text: "Manage this site's pages, posts, projects and more from the ",
+                  text: "Manage this site's pages, posts, events and more from the ",
                 },
                 {
                   type: 'link',
@@ -306,7 +306,7 @@ export const home: Partial<Page> = {
             {
               children: [
                 {
-                  text: 'Custom page builder allows you to create unique page, post, and project layouts for any type of content.',
+                  text: 'Custom page builder allows you to create unique page, post, and event layouts for any type of content.',
                 },
               ],
             },
@@ -424,7 +424,7 @@ export const home: Partial<Page> = {
           type: 'h4',
           children: [
             {
-              text: 'Recent projects',
+              text: 'Recent events',
             },
           ],
         },
@@ -432,13 +432,13 @@ export const home: Partial<Page> = {
           type: 'p',
           children: [
             {
-              text: 'The projects below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or projects can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
+              text: 'The events below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or events can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
             },
           ],
         },
       ],
       populateBy: 'collection',
-      relationTo: 'projects',
+      relationTo: 'events',
       categories: [],
     },
     {
@@ -491,10 +491,10 @@ export const home: Partial<Page> = {
           link: {
             type: 'reference',
             url: '',
-            label: 'All projects',
+            label: 'All events',
             appearance: 'secondary',
             reference: {
-              value: '{{PROJECTS_PAGE_ID}}',
+              value: '{{EVENTS_PAGE_ID}}',
               relationTo: 'pages',
             },
           },

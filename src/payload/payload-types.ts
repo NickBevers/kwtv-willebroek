@@ -10,7 +10,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
-    projects: Project;
+    events: Event;
     media: Media;
     categories: Category;
     users: User;
@@ -121,7 +121,7 @@ export interface Page {
           [k: string]: unknown;
         }[];
         populateBy?: ('collection' | 'selection') | null;
-        relationTo?: ('posts' | 'projects') | null;
+        relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;
         limit?: number | null;
         selectedDocs?:
@@ -131,8 +131,8 @@ export interface Page {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -143,8 +143,8 @@ export interface Page {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -329,7 +329,7 @@ export interface Post {
           [k: string]: unknown;
         }[];
         populateBy?: ('collection' | 'selection') | null;
-        relationTo?: ('posts' | 'projects') | null;
+        relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;
         limit?: number | null;
         selectedDocs?:
@@ -339,8 +339,8 @@ export interface Post {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -351,8 +351,8 @@ export interface Post {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -430,7 +430,7 @@ export interface Post {
               [k: string]: unknown;
             }[];
             populateBy?: ('collection' | 'selection') | null;
-            relationTo?: ('posts' | 'projects') | null;
+            relationTo?: ('posts' | 'events') | null;
             categories?: (string | Category)[] | null;
             limit?: number | null;
             selectedDocs?:
@@ -440,8 +440,8 @@ export interface Post {
                       value: string | Post;
                     }
                   | {
-                      relationTo: 'projects';
-                      value: string | Project;
+                      relationTo: 'events';
+                      value: string | Event;
                     }
                 )[]
               | null;
@@ -452,8 +452,8 @@ export interface Post {
                       value: string | Post;
                     }
                   | {
-                      relationTo: 'projects';
-                      value: string | Project;
+                      relationTo: 'events';
+                      value: string | Event;
                     }
                 )[]
               | null;
@@ -496,9 +496,9 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
+ * via the `definition` "events".
  */
-export interface Project {
+export interface Event {
   id: string;
   title: string;
   categories?: (string | Category)[] | null;
@@ -592,7 +592,7 @@ export interface Project {
           [k: string]: unknown;
         }[];
         populateBy?: ('collection' | 'selection') | null;
-        relationTo?: ('posts' | 'projects') | null;
+        relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;
         limit?: number | null;
         selectedDocs?:
@@ -602,8 +602,8 @@ export interface Project {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -614,8 +614,8 @@ export interface Project {
                   value: string | Post;
                 }
               | {
-                  relationTo: 'projects';
-                  value: string | Project;
+                  relationTo: 'events';
+                  value: string | Event;
                 }
             )[]
           | null;
@@ -625,7 +625,7 @@ export interface Project {
         blockType: 'archive';
       }
   )[];
-  relatedProjects?: (string | Project)[] | null;
+  relatedEvents?: (string | Event)[] | null;
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -700,7 +700,7 @@ export interface PayloadMigration {
 export interface Settings {
   id: string;
   postsPage?: (string | null) | Page;
-  projectsPage?: (string | null) | Page;
+  eventsPage?: (string | null) | Page;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

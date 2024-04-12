@@ -12,9 +12,9 @@ const defaultCollectionLabels = {
     plural: 'Posts',
     singular: 'Post',
   },
-  projects: {
-    plural: 'Projects',
-    singular: 'Project',
+  events: {
+    plural: 'Events',
+    singular: 'Event',
   },
 }
 

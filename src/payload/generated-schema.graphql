@@ -9,11 +9,11 @@ type Query {
   docAccessPost(id: String!): postsDocAccess
   versionPost(id: String): PostVersion
   versionsPosts(where: versionsPost_where, limit: Int, page: Int, sort: String): versionsPosts
-  Project(id: String!, draft: Boolean): Project
-  Projects(draft: Boolean, where: Project_where, limit: Int, page: Int, sort: String): Projects
-  docAccessProject(id: String!): projectsDocAccess
-  versionProject(id: String): ProjectVersion
-  versionsProjects(where: versionsProject_where, limit: Int, page: Int, sort: String): versionsProjects
+  Event(id: String!, draft: Boolean): Event
+  Events(draft: Boolean, where: Event_where, limit: Int, page: Int, sort: String): Events
+  docAccessEvent(id: String!): eventsDocAccess
+  versionEvent(id: String): EventVersion
+  versionsEvents(where: versionsEvent_where, limit: Int, page: Int, sort: String): versionsEvents
   Media(id: String!, draft: Boolean): Media
   allMedia(draft: Boolean, where: Media_where, limit: Int, page: Int, sort: String): allMedia
   docAccessMedia(id: String!): mediaDocAccess
@@ -586,7 +586,7 @@ enum Archive_populateBy {
 
 enum Archive_relationTo {
   posts
-  projects
+  events
 }
 
 type Category {
@@ -612,10 +612,10 @@ type Archive_SelectedDocs_Relationship {
 
 enum Archive_SelectedDocs_RelationTo {
   posts
-  projects
+  events
 }
 
-union Archive_SelectedDocs = Post | Project
+union Archive_SelectedDocs = Post | Event
 
 type Post {
   id: String
@@ -1056,88 +1056,88 @@ enum Post__status {
   published
 }
 
-type Project {
+type Event {
   id: String
   title: String
   categories: [Category!]
   publishedAt: DateTime
-  hero: Project_Hero
-  layout: [Project_Layout!]!
-  relatedProjects: [Project!]
+  hero: Event_Hero
+  layout: [Event_Layout!]!
+  relatedEvents: [Event!]
   slug: String
-  meta: Project_Meta
+  meta: Event_Meta
   updatedAt: DateTime
   createdAt: DateTime
-  _status: Project__status
+  _status: Event__status
 }
 
-type Project_Hero {
-  type: Project_Hero_type
+type Event_Hero {
+  type: Event_Hero_type
   richText(depth: Int): JSON
-  links: [Project_Hero_Links!]
-  media(where: Project_Hero_Media_where): Media
+  links: [Event_Hero_Links!]
+  media(where: Event_Hero_Media_where): Media
 }
 
-enum Project_Hero_type {
+enum Event_Hero_type {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-type Project_Hero_Links {
-  link: Project_Hero_Links_Link
+type Event_Hero_Links {
+  link: Event_Hero_Links_Link
   id: String
 }
 
-type Project_Hero_Links_Link {
-  type: Project_Hero_Links_Link_type
+type Event_Hero_Links_Link {
+  type: Event_Hero_Links_Link_type
   newTab: Boolean
-  reference: Project_Hero_Links_Link_Reference_Relationship
+  reference: Event_Hero_Links_Link_Reference_Relationship
   url: String
   label: String
-  appearance: Project_Hero_Links_Link_appearance
+  appearance: Event_Hero_Links_Link_appearance
 }
 
-enum Project_Hero_Links_Link_type {
+enum Event_Hero_Links_Link_type {
   reference
   custom
 }
 
-type Project_Hero_Links_Link_Reference_Relationship {
-  relationTo: Project_Hero_Links_Link_Reference_RelationTo
-  value: Project_Hero_Links_Link_Reference
+type Event_Hero_Links_Link_Reference_Relationship {
+  relationTo: Event_Hero_Links_Link_Reference_RelationTo
+  value: Event_Hero_Links_Link_Reference
 }
 
-enum Project_Hero_Links_Link_Reference_RelationTo {
+enum Event_Hero_Links_Link_Reference_RelationTo {
   pages
 }
 
-union Project_Hero_Links_Link_Reference = Page
+union Event_Hero_Links_Link_Reference = Page
 
-enum Project_Hero_Links_Link_appearance {
+enum Event_Hero_Links_Link_appearance {
   default
   primary
   secondary
 }
 
-input Project_Hero_Media_where {
-  alt: Project_Hero_Media_alt_operator
-  caption: Project_Hero_Media_caption_operator
-  updatedAt: Project_Hero_Media_updatedAt_operator
-  createdAt: Project_Hero_Media_createdAt_operator
-  url: Project_Hero_Media_url_operator
-  filename: Project_Hero_Media_filename_operator
-  mimeType: Project_Hero_Media_mimeType_operator
-  filesize: Project_Hero_Media_filesize_operator
-  width: Project_Hero_Media_width_operator
-  height: Project_Hero_Media_height_operator
-  id: Project_Hero_Media_id_operator
-  AND: [Project_Hero_Media_where_and]
-  OR: [Project_Hero_Media_where_or]
+input Event_Hero_Media_where {
+  alt: Event_Hero_Media_alt_operator
+  caption: Event_Hero_Media_caption_operator
+  updatedAt: Event_Hero_Media_updatedAt_operator
+  createdAt: Event_Hero_Media_createdAt_operator
+  url: Event_Hero_Media_url_operator
+  filename: Event_Hero_Media_filename_operator
+  mimeType: Event_Hero_Media_mimeType_operator
+  filesize: Event_Hero_Media_filesize_operator
+  width: Event_Hero_Media_width_operator
+  height: Event_Hero_Media_height_operator
+  id: Event_Hero_Media_id_operator
+  AND: [Event_Hero_Media_where_and]
+  OR: [Event_Hero_Media_where_or]
 }
 
-input Project_Hero_Media_alt_operator {
+input Event_Hero_Media_alt_operator {
   equals: String
   not_equals: String
   like: String
@@ -1147,7 +1147,7 @@ input Project_Hero_Media_alt_operator {
   all: [String]
 }
 
-input Project_Hero_Media_caption_operator {
+input Event_Hero_Media_caption_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
@@ -1155,7 +1155,7 @@ input Project_Hero_Media_caption_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_updatedAt_operator {
+input Event_Hero_Media_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -1166,7 +1166,7 @@ input Project_Hero_Media_updatedAt_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_createdAt_operator {
+input Event_Hero_Media_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -1177,7 +1177,7 @@ input Project_Hero_Media_createdAt_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_url_operator {
+input Event_Hero_Media_url_operator {
   equals: String
   not_equals: String
   like: String
@@ -1188,7 +1188,7 @@ input Project_Hero_Media_url_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_filename_operator {
+input Event_Hero_Media_filename_operator {
   equals: String
   not_equals: String
   like: String
@@ -1199,7 +1199,7 @@ input Project_Hero_Media_filename_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_mimeType_operator {
+input Event_Hero_Media_mimeType_operator {
   equals: String
   not_equals: String
   like: String
@@ -1210,7 +1210,7 @@ input Project_Hero_Media_mimeType_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_filesize_operator {
+input Event_Hero_Media_filesize_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1220,7 +1220,7 @@ input Project_Hero_Media_filesize_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_width_operator {
+input Event_Hero_Media_width_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1230,7 +1230,7 @@ input Project_Hero_Media_width_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_height_operator {
+input Event_Hero_Media_height_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1240,7 +1240,7 @@ input Project_Hero_Media_height_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_id_operator {
+input Event_Hero_Media_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -1251,63 +1251,63 @@ input Project_Hero_Media_id_operator {
   exists: Boolean
 }
 
-input Project_Hero_Media_where_and {
-  alt: Project_Hero_Media_alt_operator
-  caption: Project_Hero_Media_caption_operator
-  updatedAt: Project_Hero_Media_updatedAt_operator
-  createdAt: Project_Hero_Media_createdAt_operator
-  url: Project_Hero_Media_url_operator
-  filename: Project_Hero_Media_filename_operator
-  mimeType: Project_Hero_Media_mimeType_operator
-  filesize: Project_Hero_Media_filesize_operator
-  width: Project_Hero_Media_width_operator
-  height: Project_Hero_Media_height_operator
-  id: Project_Hero_Media_id_operator
-  AND: [Project_Hero_Media_where_and]
-  OR: [Project_Hero_Media_where_or]
+input Event_Hero_Media_where_and {
+  alt: Event_Hero_Media_alt_operator
+  caption: Event_Hero_Media_caption_operator
+  updatedAt: Event_Hero_Media_updatedAt_operator
+  createdAt: Event_Hero_Media_createdAt_operator
+  url: Event_Hero_Media_url_operator
+  filename: Event_Hero_Media_filename_operator
+  mimeType: Event_Hero_Media_mimeType_operator
+  filesize: Event_Hero_Media_filesize_operator
+  width: Event_Hero_Media_width_operator
+  height: Event_Hero_Media_height_operator
+  id: Event_Hero_Media_id_operator
+  AND: [Event_Hero_Media_where_and]
+  OR: [Event_Hero_Media_where_or]
 }
 
-input Project_Hero_Media_where_or {
-  alt: Project_Hero_Media_alt_operator
-  caption: Project_Hero_Media_caption_operator
-  updatedAt: Project_Hero_Media_updatedAt_operator
-  createdAt: Project_Hero_Media_createdAt_operator
-  url: Project_Hero_Media_url_operator
-  filename: Project_Hero_Media_filename_operator
-  mimeType: Project_Hero_Media_mimeType_operator
-  filesize: Project_Hero_Media_filesize_operator
-  width: Project_Hero_Media_width_operator
-  height: Project_Hero_Media_height_operator
-  id: Project_Hero_Media_id_operator
-  AND: [Project_Hero_Media_where_and]
-  OR: [Project_Hero_Media_where_or]
+input Event_Hero_Media_where_or {
+  alt: Event_Hero_Media_alt_operator
+  caption: Event_Hero_Media_caption_operator
+  updatedAt: Event_Hero_Media_updatedAt_operator
+  createdAt: Event_Hero_Media_createdAt_operator
+  url: Event_Hero_Media_url_operator
+  filename: Event_Hero_Media_filename_operator
+  mimeType: Event_Hero_Media_mimeType_operator
+  filesize: Event_Hero_Media_filesize_operator
+  width: Event_Hero_Media_width_operator
+  height: Event_Hero_Media_height_operator
+  id: Event_Hero_Media_id_operator
+  AND: [Event_Hero_Media_where_and]
+  OR: [Event_Hero_Media_where_or]
 }
 
-union Project_Layout = Cta | Content | MediaBlock | Archive
+union Event_Layout = Cta | Content | MediaBlock | Archive
 
-type Project_Meta {
+type Event_Meta {
   title: String
   description: String
-  image(where: Project_Meta_Image_where): Media
+  image(where: Event_Meta_Image_where): Media
 }
 
-input Project_Meta_Image_where {
-  alt: Project_Meta_Image_alt_operator
-  caption: Project_Meta_Image_caption_operator
-  updatedAt: Project_Meta_Image_updatedAt_operator
-  createdAt: Project_Meta_Image_createdAt_operator
-  url: Project_Meta_Image_url_operator
-  filename: Project_Meta_Image_filename_operator
-  mimeType: Project_Meta_Image_mimeType_operator
-  filesize: Project_Meta_Image_filesize_operator
-  width: Project_Meta_Image_width_operator
-  height: Project_Meta_Image_height_operator
-  id: Project_Meta_Image_id_operator
-  AND: [Project_Meta_Image_where_and]
-  OR: [Project_Meta_Image_where_or]
+input Event_Meta_Image_where {
+  alt: Event_Meta_Image_alt_operator
+  caption: Event_Meta_Image_caption_operator
+  updatedAt: Event_Meta_Image_updatedAt_operator
+  createdAt: Event_Meta_Image_createdAt_operator
+  url: Event_Meta_Image_url_operator
+  filename: Event_Meta_Image_filename_operator
+  mimeType: Event_Meta_Image_mimeType_operator
+  filesize: Event_Meta_Image_filesize_operator
+  width: Event_Meta_Image_width_operator
+  height: Event_Meta_Image_height_operator
+  id: Event_Meta_Image_id_operator
+  AND: [Event_Meta_Image_where_and]
+  OR: [Event_Meta_Image_where_or]
 }
 
-input Project_Meta_Image_alt_operator {
+input Event_Meta_Image_alt_operator {
   equals: String
   not_equals: String
   like: String
@@ -1317,7 +1317,7 @@ input Project_Meta_Image_alt_operator {
   all: [String]
 }
 
-input Project_Meta_Image_caption_operator {
+input Event_Meta_Image_caption_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
@@ -1325,7 +1325,7 @@ input Project_Meta_Image_caption_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_updatedAt_operator {
+input Event_Meta_Image_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -1336,7 +1336,7 @@ input Project_Meta_Image_updatedAt_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_createdAt_operator {
+input Event_Meta_Image_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -1347,7 +1347,7 @@ input Project_Meta_Image_createdAt_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_url_operator {
+input Event_Meta_Image_url_operator {
   equals: String
   not_equals: String
   like: String
@@ -1358,7 +1358,7 @@ input Project_Meta_Image_url_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_filename_operator {
+input Event_Meta_Image_filename_operator {
   equals: String
   not_equals: String
   like: String
@@ -1369,7 +1369,7 @@ input Project_Meta_Image_filename_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_mimeType_operator {
+input Event_Meta_Image_mimeType_operator {
   equals: String
   not_equals: String
   like: String
@@ -1380,7 +1380,7 @@ input Project_Meta_Image_mimeType_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_filesize_operator {
+input Event_Meta_Image_filesize_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1390,7 +1390,7 @@ input Project_Meta_Image_filesize_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_width_operator {
+input Event_Meta_Image_width_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1400,7 +1400,7 @@ input Project_Meta_Image_width_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_height_operator {
+input Event_Meta_Image_height_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -1410,7 +1410,7 @@ input Project_Meta_Image_height_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_id_operator {
+input Event_Meta_Image_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -1421,39 +1421,39 @@ input Project_Meta_Image_id_operator {
   exists: Boolean
 }
 
-input Project_Meta_Image_where_and {
-  alt: Project_Meta_Image_alt_operator
-  caption: Project_Meta_Image_caption_operator
-  updatedAt: Project_Meta_Image_updatedAt_operator
-  createdAt: Project_Meta_Image_createdAt_operator
-  url: Project_Meta_Image_url_operator
-  filename: Project_Meta_Image_filename_operator
-  mimeType: Project_Meta_Image_mimeType_operator
-  filesize: Project_Meta_Image_filesize_operator
-  width: Project_Meta_Image_width_operator
-  height: Project_Meta_Image_height_operator
-  id: Project_Meta_Image_id_operator
-  AND: [Project_Meta_Image_where_and]
-  OR: [Project_Meta_Image_where_or]
+input Event_Meta_Image_where_and {
+  alt: Event_Meta_Image_alt_operator
+  caption: Event_Meta_Image_caption_operator
+  updatedAt: Event_Meta_Image_updatedAt_operator
+  createdAt: Event_Meta_Image_createdAt_operator
+  url: Event_Meta_Image_url_operator
+  filename: Event_Meta_Image_filename_operator
+  mimeType: Event_Meta_Image_mimeType_operator
+  filesize: Event_Meta_Image_filesize_operator
+  width: Event_Meta_Image_width_operator
+  height: Event_Meta_Image_height_operator
+  id: Event_Meta_Image_id_operator
+  AND: [Event_Meta_Image_where_and]
+  OR: [Event_Meta_Image_where_or]
 }
 
-input Project_Meta_Image_where_or {
-  alt: Project_Meta_Image_alt_operator
-  caption: Project_Meta_Image_caption_operator
-  updatedAt: Project_Meta_Image_updatedAt_operator
-  createdAt: Project_Meta_Image_createdAt_operator
-  url: Project_Meta_Image_url_operator
-  filename: Project_Meta_Image_filename_operator
-  mimeType: Project_Meta_Image_mimeType_operator
-  filesize: Project_Meta_Image_filesize_operator
-  width: Project_Meta_Image_width_operator
-  height: Project_Meta_Image_height_operator
-  id: Project_Meta_Image_id_operator
-  AND: [Project_Meta_Image_where_and]
-  OR: [Project_Meta_Image_where_or]
+input Event_Meta_Image_where_or {
+  alt: Event_Meta_Image_alt_operator
+  caption: Event_Meta_Image_caption_operator
+  updatedAt: Event_Meta_Image_updatedAt_operator
+  createdAt: Event_Meta_Image_createdAt_operator
+  url: Event_Meta_Image_url_operator
+  filename: Event_Meta_Image_filename_operator
+  mimeType: Event_Meta_Image_mimeType_operator
+  filesize: Event_Meta_Image_filesize_operator
+  width: Event_Meta_Image_width_operator
+  height: Event_Meta_Image_height_operator
+  id: Event_Meta_Image_id_operator
+  AND: [Event_Meta_Image_where_and]
+  OR: [Event_Meta_Image_where_or]
 }
 
-enum Project__status {
+enum Event__status {
   draft
   published
 }
@@ -1465,10 +1465,10 @@ type Archive_PopulatedDocs_Relationship {
 
 enum Archive_PopulatedDocs_RelationTo {
   posts
-  projects
+  events
 }
 
-union Archive_PopulatedDocs = Post | Project
+union Archive_PopulatedDocs = Post | Event
 
 type CarouselBlock {
   slides: [CarouselBlock_Slides!]
@@ -5539,8 +5539,8 @@ input versionsPost_where_or {
   OR: [versionsPost_where_or]
 }
 
-type Projects {
-  docs: [Project]
+type Events {
+  docs: [Event]
   hasNextPage: Boolean
   hasPrevPage: Boolean
   limit: Int
@@ -5553,34 +5553,34 @@ type Projects {
   totalPages: Int
 }
 
-input Project_where {
-  title: Project_title_operator
-  categories: Project_categories_operator
-  publishedAt: Project_publishedAt_operator
-  hero__type: Project_hero__type_operator
-  hero__richText: Project_hero__richText_operator
-  hero__links__link__type: Project_hero__links__link__type_operator
-  hero__links__link__newTab: Project_hero__links__link__newTab_operator
-  hero__links__link__reference: Project_hero__links__link__reference_Relation
-  hero__links__link__url: Project_hero__links__link__url_operator
-  hero__links__link__label: Project_hero__links__link__label_operator
-  hero__links__link__appearance: Project_hero__links__link__appearance_operator
-  hero__links__id: Project_hero__links__id_operator
-  hero__media: Project_hero__media_operator
-  relatedProjects: Project_relatedProjects_operator
-  slug: Project_slug_operator
-  meta__title: Project_meta__title_operator
-  meta__description: Project_meta__description_operator
-  meta__image: Project_meta__image_operator
-  updatedAt: Project_updatedAt_operator
-  createdAt: Project_createdAt_operator
-  _status: Project__status_operator
-  id: Project_id_operator
-  AND: [Project_where_and]
-  OR: [Project_where_or]
+input Event_where {
+  title: Event_title_operator
+  categories: Event_categories_operator
+  publishedAt: Event_publishedAt_operator
+  hero__type: Event_hero__type_operator
+  hero__richText: Event_hero__richText_operator
+  hero__links__link__type: Event_hero__links__link__type_operator
+  hero__links__link__newTab: Event_hero__links__link__newTab_operator
+  hero__links__link__reference: Event_hero__links__link__reference_Relation
+  hero__links__link__url: Event_hero__links__link__url_operator
+  hero__links__link__label: Event_hero__links__link__label_operator
+  hero__links__link__appearance: Event_hero__links__link__appearance_operator
+  hero__links__id: Event_hero__links__id_operator
+  hero__media: Event_hero__media_operator
+  relatedEvents: Event_relatedEvents_operator
+  slug: Event_slug_operator
+  meta__title: Event_meta__title_operator
+  meta__description: Event_meta__description_operator
+  meta__image: Event_meta__image_operator
+  updatedAt: Event_updatedAt_operator
+  createdAt: Event_createdAt_operator
+  _status: Event__status_operator
+  id: Event_id_operator
+  AND: [Event_where_and]
+  OR: [Event_where_or]
 }
 
-input Project_title_operator {
+input Event_title_operator {
   equals: String
   not_equals: String
   like: String
@@ -5590,7 +5590,7 @@ input Project_title_operator {
   all: [String]
 }
 
-input Project_categories_operator {
+input Event_categories_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -5599,7 +5599,7 @@ input Project_categories_operator {
   exists: Boolean
 }
 
-input Project_publishedAt_operator {
+input Event_publishedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -5610,57 +5610,57 @@ input Project_publishedAt_operator {
   exists: Boolean
 }
 
-input Project_hero__type_operator {
-  equals: Project_hero__type_Input
-  not_equals: Project_hero__type_Input
-  in: [Project_hero__type_Input]
-  not_in: [Project_hero__type_Input]
-  all: [Project_hero__type_Input]
+input Event_hero__type_operator {
+  equals: Event_hero__type_Input
+  not_equals: Event_hero__type_Input
+  in: [Event_hero__type_Input]
+  not_in: [Event_hero__type_Input]
+  all: [Event_hero__type_Input]
 }
 
-enum Project_hero__type_Input {
+enum Event_hero__type_Input {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-input Project_hero__richText_operator {
+input Event_hero__richText_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
   contains: JSON
 }
 
-input Project_hero__links__link__type_operator {
-  equals: Project_hero__links__link__type_Input
-  not_equals: Project_hero__links__link__type_Input
-  like: Project_hero__links__link__type_Input
-  contains: Project_hero__links__link__type_Input
+input Event_hero__links__link__type_operator {
+  equals: Event_hero__links__link__type_Input
+  not_equals: Event_hero__links__link__type_Input
+  like: Event_hero__links__link__type_Input
+  contains: Event_hero__links__link__type_Input
   exists: Boolean
 }
 
-enum Project_hero__links__link__type_Input {
+enum Event_hero__links__link__type_Input {
   reference
   custom
 }
 
-input Project_hero__links__link__newTab_operator {
+input Event_hero__links__link__newTab_operator {
   equals: Boolean
   not_equals: Boolean
   exists: Boolean
 }
 
-input Project_hero__links__link__reference_Relation {
-  relationTo: Project_hero__links__link__reference_Relation_RelationTo
+input Event_hero__links__link__reference_Relation {
+  relationTo: Event_hero__links__link__reference_Relation_RelationTo
   value: JSON
 }
 
-enum Project_hero__links__link__reference_Relation_RelationTo {
+enum Event_hero__links__link__reference_Relation_RelationTo {
   pages
 }
 
-input Project_hero__links__link__url_operator {
+input Event_hero__links__link__url_operator {
   equals: String
   not_equals: String
   like: String
@@ -5670,7 +5670,7 @@ input Project_hero__links__link__url_operator {
   all: [String]
 }
 
-input Project_hero__links__link__label_operator {
+input Event_hero__links__link__label_operator {
   equals: String
   not_equals: String
   like: String
@@ -5680,22 +5680,22 @@ input Project_hero__links__link__label_operator {
   all: [String]
 }
 
-input Project_hero__links__link__appearance_operator {
-  equals: Project_hero__links__link__appearance_Input
-  not_equals: Project_hero__links__link__appearance_Input
-  in: [Project_hero__links__link__appearance_Input]
-  not_in: [Project_hero__links__link__appearance_Input]
-  all: [Project_hero__links__link__appearance_Input]
+input Event_hero__links__link__appearance_operator {
+  equals: Event_hero__links__link__appearance_Input
+  not_equals: Event_hero__links__link__appearance_Input
+  in: [Event_hero__links__link__appearance_Input]
+  not_in: [Event_hero__links__link__appearance_Input]
+  all: [Event_hero__links__link__appearance_Input]
   exists: Boolean
 }
 
-enum Project_hero__links__link__appearance_Input {
+enum Event_hero__links__link__appearance_Input {
   default
   primary
   secondary
 }
 
-input Project_hero__links__id_operator {
+input Event_hero__links__id_operator {
   equals: String
   not_equals: String
   like: String
@@ -5706,12 +5706,12 @@ input Project_hero__links__id_operator {
   exists: Boolean
 }
 
-input Project_hero__media_operator {
+input Event_hero__media_operator {
   equals: String
   not_equals: String
 }
 
-input Project_relatedProjects_operator {
+input Event_relatedEvents_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -5720,7 +5720,7 @@ input Project_relatedProjects_operator {
   exists: Boolean
 }
 
-input Project_slug_operator {
+input Event_slug_operator {
   equals: String
   not_equals: String
   like: String
@@ -5731,7 +5731,7 @@ input Project_slug_operator {
   exists: Boolean
 }
 
-input Project_meta__title_operator {
+input Event_meta__title_operator {
   equals: String
   not_equals: String
   like: String
@@ -5742,7 +5742,7 @@ input Project_meta__title_operator {
   exists: Boolean
 }
 
-input Project_meta__description_operator {
+input Event_meta__description_operator {
   equals: String
   not_equals: String
   like: String
@@ -5750,13 +5750,13 @@ input Project_meta__description_operator {
   exists: Boolean
 }
 
-input Project_meta__image_operator {
+input Event_meta__image_operator {
   equals: String
   not_equals: String
   exists: Boolean
 }
 
-input Project_updatedAt_operator {
+input Event_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -5767,7 +5767,7 @@ input Project_updatedAt_operator {
   exists: Boolean
 }
 
-input Project_createdAt_operator {
+input Event_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -5778,21 +5778,21 @@ input Project_createdAt_operator {
   exists: Boolean
 }
 
-input Project__status_operator {
-  equals: Project__status_Input
-  not_equals: Project__status_Input
-  in: [Project__status_Input]
-  not_in: [Project__status_Input]
-  all: [Project__status_Input]
+input Event__status_operator {
+  equals: Event__status_Input
+  not_equals: Event__status_Input
+  in: [Event__status_Input]
+  not_in: [Event__status_Input]
+  all: [Event__status_Input]
   exists: Boolean
 }
 
-enum Project__status_Input {
+enum Event__status_Input {
   draft
   published
 }
 
-input Project_id_operator {
+input Event_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -5803,827 +5803,827 @@ input Project_id_operator {
   exists: Boolean
 }
 
-input Project_where_and {
-  title: Project_title_operator
-  categories: Project_categories_operator
-  publishedAt: Project_publishedAt_operator
-  hero__type: Project_hero__type_operator
-  hero__richText: Project_hero__richText_operator
-  hero__links__link__type: Project_hero__links__link__type_operator
-  hero__links__link__newTab: Project_hero__links__link__newTab_operator
-  hero__links__link__reference: Project_hero__links__link__reference_Relation
-  hero__links__link__url: Project_hero__links__link__url_operator
-  hero__links__link__label: Project_hero__links__link__label_operator
-  hero__links__link__appearance: Project_hero__links__link__appearance_operator
-  hero__links__id: Project_hero__links__id_operator
-  hero__media: Project_hero__media_operator
-  relatedProjects: Project_relatedProjects_operator
-  slug: Project_slug_operator
-  meta__title: Project_meta__title_operator
-  meta__description: Project_meta__description_operator
-  meta__image: Project_meta__image_operator
-  updatedAt: Project_updatedAt_operator
-  createdAt: Project_createdAt_operator
-  _status: Project__status_operator
-  id: Project_id_operator
-  AND: [Project_where_and]
-  OR: [Project_where_or]
+input Event_where_and {
+  title: Event_title_operator
+  categories: Event_categories_operator
+  publishedAt: Event_publishedAt_operator
+  hero__type: Event_hero__type_operator
+  hero__richText: Event_hero__richText_operator
+  hero__links__link__type: Event_hero__links__link__type_operator
+  hero__links__link__newTab: Event_hero__links__link__newTab_operator
+  hero__links__link__reference: Event_hero__links__link__reference_Relation
+  hero__links__link__url: Event_hero__links__link__url_operator
+  hero__links__link__label: Event_hero__links__link__label_operator
+  hero__links__link__appearance: Event_hero__links__link__appearance_operator
+  hero__links__id: Event_hero__links__id_operator
+  hero__media: Event_hero__media_operator
+  relatedEvents: Event_relatedEvents_operator
+  slug: Event_slug_operator
+  meta__title: Event_meta__title_operator
+  meta__description: Event_meta__description_operator
+  meta__image: Event_meta__image_operator
+  updatedAt: Event_updatedAt_operator
+  createdAt: Event_createdAt_operator
+  _status: Event__status_operator
+  id: Event_id_operator
+  AND: [Event_where_and]
+  OR: [Event_where_or]
 }
 
-input Project_where_or {
-  title: Project_title_operator
-  categories: Project_categories_operator
-  publishedAt: Project_publishedAt_operator
-  hero__type: Project_hero__type_operator
-  hero__richText: Project_hero__richText_operator
-  hero__links__link__type: Project_hero__links__link__type_operator
-  hero__links__link__newTab: Project_hero__links__link__newTab_operator
-  hero__links__link__reference: Project_hero__links__link__reference_Relation
-  hero__links__link__url: Project_hero__links__link__url_operator
-  hero__links__link__label: Project_hero__links__link__label_operator
-  hero__links__link__appearance: Project_hero__links__link__appearance_operator
-  hero__links__id: Project_hero__links__id_operator
-  hero__media: Project_hero__media_operator
-  relatedProjects: Project_relatedProjects_operator
-  slug: Project_slug_operator
-  meta__title: Project_meta__title_operator
-  meta__description: Project_meta__description_operator
-  meta__image: Project_meta__image_operator
-  updatedAt: Project_updatedAt_operator
-  createdAt: Project_createdAt_operator
-  _status: Project__status_operator
-  id: Project_id_operator
-  AND: [Project_where_and]
-  OR: [Project_where_or]
+input Event_where_or {
+  title: Event_title_operator
+  categories: Event_categories_operator
+  publishedAt: Event_publishedAt_operator
+  hero__type: Event_hero__type_operator
+  hero__richText: Event_hero__richText_operator
+  hero__links__link__type: Event_hero__links__link__type_operator
+  hero__links__link__newTab: Event_hero__links__link__newTab_operator
+  hero__links__link__reference: Event_hero__links__link__reference_Relation
+  hero__links__link__url: Event_hero__links__link__url_operator
+  hero__links__link__label: Event_hero__links__link__label_operator
+  hero__links__link__appearance: Event_hero__links__link__appearance_operator
+  hero__links__id: Event_hero__links__id_operator
+  hero__media: Event_hero__media_operator
+  relatedEvents: Event_relatedEvents_operator
+  slug: Event_slug_operator
+  meta__title: Event_meta__title_operator
+  meta__description: Event_meta__description_operator
+  meta__image: Event_meta__image_operator
+  updatedAt: Event_updatedAt_operator
+  createdAt: Event_createdAt_operator
+  _status: Event__status_operator
+  id: Event_id_operator
+  AND: [Event_where_and]
+  OR: [Event_where_or]
 }
 
-type projectsDocAccess {
-  fields: ProjectsDocAccessFields
-  create: ProjectsCreateDocAccess
-  read: ProjectsReadDocAccess
-  update: ProjectsUpdateDocAccess
-  delete: ProjectsDeleteDocAccess
-  readVersions: ProjectsReadVersionsDocAccess
+type eventsDocAccess {
+  fields: EventsDocAccessFields
+  create: EventsCreateDocAccess
+  read: EventsReadDocAccess
+  update: EventsUpdateDocAccess
+  delete: EventsDeleteDocAccess
+  readVersions: EventsReadVersionsDocAccess
 }
 
-type ProjectsDocAccessFields {
-  title: ProjectsDocAccessFields_title
-  categories: ProjectsDocAccessFields_categories
-  publishedAt: ProjectsDocAccessFields_publishedAt
-  hero: ProjectsDocAccessFields_hero
-  layout: ProjectsDocAccessFields_layout
-  relatedProjects: ProjectsDocAccessFields_relatedProjects
-  slug: ProjectsDocAccessFields_slug
-  meta: ProjectsDocAccessFields_meta
-  updatedAt: ProjectsDocAccessFields_updatedAt
-  createdAt: ProjectsDocAccessFields_createdAt
-  _status: ProjectsDocAccessFields__status
+type EventsDocAccessFields {
+  title: EventsDocAccessFields_title
+  categories: EventsDocAccessFields_categories
+  publishedAt: EventsDocAccessFields_publishedAt
+  hero: EventsDocAccessFields_hero
+  layout: EventsDocAccessFields_layout
+  relatedEvents: EventsDocAccessFields_relatedEvents
+  slug: EventsDocAccessFields_slug
+  meta: EventsDocAccessFields_meta
+  updatedAt: EventsDocAccessFields_updatedAt
+  createdAt: EventsDocAccessFields_createdAt
+  _status: EventsDocAccessFields__status
 }
 
-type ProjectsDocAccessFields_title {
-  create: ProjectsDocAccessFields_title_Create
-  read: ProjectsDocAccessFields_title_Read
-  update: ProjectsDocAccessFields_title_Update
-  delete: ProjectsDocAccessFields_title_Delete
+type EventsDocAccessFields_title {
+  create: EventsDocAccessFields_title_Create
+  read: EventsDocAccessFields_title_Read
+  update: EventsDocAccessFields_title_Update
+  delete: EventsDocAccessFields_title_Delete
 }
 
-type ProjectsDocAccessFields_title_Create {
+type EventsDocAccessFields_title_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_title_Read {
+type EventsDocAccessFields_title_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_title_Update {
+type EventsDocAccessFields_title_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_title_Delete {
+type EventsDocAccessFields_title_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_categories {
-  create: ProjectsDocAccessFields_categories_Create
-  read: ProjectsDocAccessFields_categories_Read
-  update: ProjectsDocAccessFields_categories_Update
-  delete: ProjectsDocAccessFields_categories_Delete
+type EventsDocAccessFields_categories {
+  create: EventsDocAccessFields_categories_Create
+  read: EventsDocAccessFields_categories_Read
+  update: EventsDocAccessFields_categories_Update
+  delete: EventsDocAccessFields_categories_Delete
 }
 
-type ProjectsDocAccessFields_categories_Create {
+type EventsDocAccessFields_categories_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_categories_Read {
+type EventsDocAccessFields_categories_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_categories_Update {
+type EventsDocAccessFields_categories_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_categories_Delete {
+type EventsDocAccessFields_categories_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_publishedAt {
-  create: ProjectsDocAccessFields_publishedAt_Create
-  read: ProjectsDocAccessFields_publishedAt_Read
-  update: ProjectsDocAccessFields_publishedAt_Update
-  delete: ProjectsDocAccessFields_publishedAt_Delete
+type EventsDocAccessFields_publishedAt {
+  create: EventsDocAccessFields_publishedAt_Create
+  read: EventsDocAccessFields_publishedAt_Read
+  update: EventsDocAccessFields_publishedAt_Update
+  delete: EventsDocAccessFields_publishedAt_Delete
 }
 
-type ProjectsDocAccessFields_publishedAt_Create {
+type EventsDocAccessFields_publishedAt_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_publishedAt_Read {
+type EventsDocAccessFields_publishedAt_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_publishedAt_Update {
+type EventsDocAccessFields_publishedAt_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_publishedAt_Delete {
+type EventsDocAccessFields_publishedAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero {
-  create: ProjectsDocAccessFields_hero_Create
-  read: ProjectsDocAccessFields_hero_Read
-  update: ProjectsDocAccessFields_hero_Update
-  delete: ProjectsDocAccessFields_hero_Delete
-  fields: ProjectsDocAccessFields_hero_Fields
+type EventsDocAccessFields_hero {
+  create: EventsDocAccessFields_hero_Create
+  read: EventsDocAccessFields_hero_Read
+  update: EventsDocAccessFields_hero_Update
+  delete: EventsDocAccessFields_hero_Delete
+  fields: EventsDocAccessFields_hero_Fields
 }
 
-type ProjectsDocAccessFields_hero_Create {
+type EventsDocAccessFields_hero_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_Read {
+type EventsDocAccessFields_hero_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_Update {
+type EventsDocAccessFields_hero_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_Delete {
+type EventsDocAccessFields_hero_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_Fields {
-  type: ProjectsDocAccessFields_hero_type
-  richText: ProjectsDocAccessFields_hero_richText
-  links: ProjectsDocAccessFields_hero_links
-  media: ProjectsDocAccessFields_hero_media
+type EventsDocAccessFields_hero_Fields {
+  type: EventsDocAccessFields_hero_type
+  richText: EventsDocAccessFields_hero_richText
+  links: EventsDocAccessFields_hero_links
+  media: EventsDocAccessFields_hero_media
 }
 
-type ProjectsDocAccessFields_hero_type {
-  create: ProjectsDocAccessFields_hero_type_Create
-  read: ProjectsDocAccessFields_hero_type_Read
-  update: ProjectsDocAccessFields_hero_type_Update
-  delete: ProjectsDocAccessFields_hero_type_Delete
+type EventsDocAccessFields_hero_type {
+  create: EventsDocAccessFields_hero_type_Create
+  read: EventsDocAccessFields_hero_type_Read
+  update: EventsDocAccessFields_hero_type_Update
+  delete: EventsDocAccessFields_hero_type_Delete
 }
 
-type ProjectsDocAccessFields_hero_type_Create {
+type EventsDocAccessFields_hero_type_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_type_Read {
+type EventsDocAccessFields_hero_type_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_type_Update {
+type EventsDocAccessFields_hero_type_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_type_Delete {
+type EventsDocAccessFields_hero_type_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_richText {
-  create: ProjectsDocAccessFields_hero_richText_Create
-  read: ProjectsDocAccessFields_hero_richText_Read
-  update: ProjectsDocAccessFields_hero_richText_Update
-  delete: ProjectsDocAccessFields_hero_richText_Delete
+type EventsDocAccessFields_hero_richText {
+  create: EventsDocAccessFields_hero_richText_Create
+  read: EventsDocAccessFields_hero_richText_Read
+  update: EventsDocAccessFields_hero_richText_Update
+  delete: EventsDocAccessFields_hero_richText_Delete
 }
 
-type ProjectsDocAccessFields_hero_richText_Create {
+type EventsDocAccessFields_hero_richText_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_richText_Read {
+type EventsDocAccessFields_hero_richText_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_richText_Update {
+type EventsDocAccessFields_hero_richText_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_richText_Delete {
+type EventsDocAccessFields_hero_richText_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links {
-  create: ProjectsDocAccessFields_hero_links_Create
-  read: ProjectsDocAccessFields_hero_links_Read
-  update: ProjectsDocAccessFields_hero_links_Update
-  delete: ProjectsDocAccessFields_hero_links_Delete
-  fields: ProjectsDocAccessFields_hero_links_Fields
+type EventsDocAccessFields_hero_links {
+  create: EventsDocAccessFields_hero_links_Create
+  read: EventsDocAccessFields_hero_links_Read
+  update: EventsDocAccessFields_hero_links_Update
+  delete: EventsDocAccessFields_hero_links_Delete
+  fields: EventsDocAccessFields_hero_links_Fields
 }
 
-type ProjectsDocAccessFields_hero_links_Create {
+type EventsDocAccessFields_hero_links_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_Read {
+type EventsDocAccessFields_hero_links_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_Update {
+type EventsDocAccessFields_hero_links_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_Delete {
+type EventsDocAccessFields_hero_links_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_Fields {
-  link: ProjectsDocAccessFields_hero_links_link
-  id: ProjectsDocAccessFields_hero_links_id
+type EventsDocAccessFields_hero_links_Fields {
+  link: EventsDocAccessFields_hero_links_link
+  id: EventsDocAccessFields_hero_links_id
 }
 
-type ProjectsDocAccessFields_hero_links_link {
-  create: ProjectsDocAccessFields_hero_links_link_Create
-  read: ProjectsDocAccessFields_hero_links_link_Read
-  update: ProjectsDocAccessFields_hero_links_link_Update
-  delete: ProjectsDocAccessFields_hero_links_link_Delete
-  fields: ProjectsDocAccessFields_hero_links_link_Fields
+type EventsDocAccessFields_hero_links_link {
+  create: EventsDocAccessFields_hero_links_link_Create
+  read: EventsDocAccessFields_hero_links_link_Read
+  update: EventsDocAccessFields_hero_links_link_Update
+  delete: EventsDocAccessFields_hero_links_link_Delete
+  fields: EventsDocAccessFields_hero_links_link_Fields
 }
 
-type ProjectsDocAccessFields_hero_links_link_Create {
+type EventsDocAccessFields_hero_links_link_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_Read {
+type EventsDocAccessFields_hero_links_link_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_Update {
+type EventsDocAccessFields_hero_links_link_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_Delete {
+type EventsDocAccessFields_hero_links_link_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_Fields {
-  type: ProjectsDocAccessFields_hero_links_link_type
-  newTab: ProjectsDocAccessFields_hero_links_link_newTab
-  reference: ProjectsDocAccessFields_hero_links_link_reference
-  url: ProjectsDocAccessFields_hero_links_link_url
-  label: ProjectsDocAccessFields_hero_links_link_label
-  appearance: ProjectsDocAccessFields_hero_links_link_appearance
+type EventsDocAccessFields_hero_links_link_Fields {
+  type: EventsDocAccessFields_hero_links_link_type
+  newTab: EventsDocAccessFields_hero_links_link_newTab
+  reference: EventsDocAccessFields_hero_links_link_reference
+  url: EventsDocAccessFields_hero_links_link_url
+  label: EventsDocAccessFields_hero_links_link_label
+  appearance: EventsDocAccessFields_hero_links_link_appearance
 }
 
-type ProjectsDocAccessFields_hero_links_link_type {
-  create: ProjectsDocAccessFields_hero_links_link_type_Create
-  read: ProjectsDocAccessFields_hero_links_link_type_Read
-  update: ProjectsDocAccessFields_hero_links_link_type_Update
-  delete: ProjectsDocAccessFields_hero_links_link_type_Delete
+type EventsDocAccessFields_hero_links_link_type {
+  create: EventsDocAccessFields_hero_links_link_type_Create
+  read: EventsDocAccessFields_hero_links_link_type_Read
+  update: EventsDocAccessFields_hero_links_link_type_Update
+  delete: EventsDocAccessFields_hero_links_link_type_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_type_Create {
+type EventsDocAccessFields_hero_links_link_type_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_type_Read {
+type EventsDocAccessFields_hero_links_link_type_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_type_Update {
+type EventsDocAccessFields_hero_links_link_type_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_type_Delete {
+type EventsDocAccessFields_hero_links_link_type_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_newTab {
-  create: ProjectsDocAccessFields_hero_links_link_newTab_Create
-  read: ProjectsDocAccessFields_hero_links_link_newTab_Read
-  update: ProjectsDocAccessFields_hero_links_link_newTab_Update
-  delete: ProjectsDocAccessFields_hero_links_link_newTab_Delete
+type EventsDocAccessFields_hero_links_link_newTab {
+  create: EventsDocAccessFields_hero_links_link_newTab_Create
+  read: EventsDocAccessFields_hero_links_link_newTab_Read
+  update: EventsDocAccessFields_hero_links_link_newTab_Update
+  delete: EventsDocAccessFields_hero_links_link_newTab_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_newTab_Create {
+type EventsDocAccessFields_hero_links_link_newTab_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_newTab_Read {
+type EventsDocAccessFields_hero_links_link_newTab_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_newTab_Update {
+type EventsDocAccessFields_hero_links_link_newTab_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_newTab_Delete {
+type EventsDocAccessFields_hero_links_link_newTab_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_reference {
-  create: ProjectsDocAccessFields_hero_links_link_reference_Create
-  read: ProjectsDocAccessFields_hero_links_link_reference_Read
-  update: ProjectsDocAccessFields_hero_links_link_reference_Update
-  delete: ProjectsDocAccessFields_hero_links_link_reference_Delete
+type EventsDocAccessFields_hero_links_link_reference {
+  create: EventsDocAccessFields_hero_links_link_reference_Create
+  read: EventsDocAccessFields_hero_links_link_reference_Read
+  update: EventsDocAccessFields_hero_links_link_reference_Update
+  delete: EventsDocAccessFields_hero_links_link_reference_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_reference_Create {
+type EventsDocAccessFields_hero_links_link_reference_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_reference_Read {
+type EventsDocAccessFields_hero_links_link_reference_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_reference_Update {
+type EventsDocAccessFields_hero_links_link_reference_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_reference_Delete {
+type EventsDocAccessFields_hero_links_link_reference_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_url {
-  create: ProjectsDocAccessFields_hero_links_link_url_Create
-  read: ProjectsDocAccessFields_hero_links_link_url_Read
-  update: ProjectsDocAccessFields_hero_links_link_url_Update
-  delete: ProjectsDocAccessFields_hero_links_link_url_Delete
+type EventsDocAccessFields_hero_links_link_url {
+  create: EventsDocAccessFields_hero_links_link_url_Create
+  read: EventsDocAccessFields_hero_links_link_url_Read
+  update: EventsDocAccessFields_hero_links_link_url_Update
+  delete: EventsDocAccessFields_hero_links_link_url_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_url_Create {
+type EventsDocAccessFields_hero_links_link_url_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_url_Read {
+type EventsDocAccessFields_hero_links_link_url_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_url_Update {
+type EventsDocAccessFields_hero_links_link_url_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_url_Delete {
+type EventsDocAccessFields_hero_links_link_url_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_label {
-  create: ProjectsDocAccessFields_hero_links_link_label_Create
-  read: ProjectsDocAccessFields_hero_links_link_label_Read
-  update: ProjectsDocAccessFields_hero_links_link_label_Update
-  delete: ProjectsDocAccessFields_hero_links_link_label_Delete
+type EventsDocAccessFields_hero_links_link_label {
+  create: EventsDocAccessFields_hero_links_link_label_Create
+  read: EventsDocAccessFields_hero_links_link_label_Read
+  update: EventsDocAccessFields_hero_links_link_label_Update
+  delete: EventsDocAccessFields_hero_links_link_label_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_label_Create {
+type EventsDocAccessFields_hero_links_link_label_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_label_Read {
+type EventsDocAccessFields_hero_links_link_label_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_label_Update {
+type EventsDocAccessFields_hero_links_link_label_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_label_Delete {
+type EventsDocAccessFields_hero_links_link_label_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_appearance {
-  create: ProjectsDocAccessFields_hero_links_link_appearance_Create
-  read: ProjectsDocAccessFields_hero_links_link_appearance_Read
-  update: ProjectsDocAccessFields_hero_links_link_appearance_Update
-  delete: ProjectsDocAccessFields_hero_links_link_appearance_Delete
+type EventsDocAccessFields_hero_links_link_appearance {
+  create: EventsDocAccessFields_hero_links_link_appearance_Create
+  read: EventsDocAccessFields_hero_links_link_appearance_Read
+  update: EventsDocAccessFields_hero_links_link_appearance_Update
+  delete: EventsDocAccessFields_hero_links_link_appearance_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_link_appearance_Create {
+type EventsDocAccessFields_hero_links_link_appearance_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_appearance_Read {
+type EventsDocAccessFields_hero_links_link_appearance_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_appearance_Update {
+type EventsDocAccessFields_hero_links_link_appearance_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_link_appearance_Delete {
+type EventsDocAccessFields_hero_links_link_appearance_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_id {
-  create: ProjectsDocAccessFields_hero_links_id_Create
-  read: ProjectsDocAccessFields_hero_links_id_Read
-  update: ProjectsDocAccessFields_hero_links_id_Update
-  delete: ProjectsDocAccessFields_hero_links_id_Delete
+type EventsDocAccessFields_hero_links_id {
+  create: EventsDocAccessFields_hero_links_id_Create
+  read: EventsDocAccessFields_hero_links_id_Read
+  update: EventsDocAccessFields_hero_links_id_Update
+  delete: EventsDocAccessFields_hero_links_id_Delete
 }
 
-type ProjectsDocAccessFields_hero_links_id_Create {
+type EventsDocAccessFields_hero_links_id_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_id_Read {
+type EventsDocAccessFields_hero_links_id_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_id_Update {
+type EventsDocAccessFields_hero_links_id_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_links_id_Delete {
+type EventsDocAccessFields_hero_links_id_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_media {
-  create: ProjectsDocAccessFields_hero_media_Create
-  read: ProjectsDocAccessFields_hero_media_Read
-  update: ProjectsDocAccessFields_hero_media_Update
-  delete: ProjectsDocAccessFields_hero_media_Delete
+type EventsDocAccessFields_hero_media {
+  create: EventsDocAccessFields_hero_media_Create
+  read: EventsDocAccessFields_hero_media_Read
+  update: EventsDocAccessFields_hero_media_Update
+  delete: EventsDocAccessFields_hero_media_Delete
 }
 
-type ProjectsDocAccessFields_hero_media_Create {
+type EventsDocAccessFields_hero_media_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_media_Read {
+type EventsDocAccessFields_hero_media_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_media_Update {
+type EventsDocAccessFields_hero_media_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_hero_media_Delete {
+type EventsDocAccessFields_hero_media_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_layout {
-  create: ProjectsDocAccessFields_layout_Create
-  read: ProjectsDocAccessFields_layout_Read
-  update: ProjectsDocAccessFields_layout_Update
-  delete: ProjectsDocAccessFields_layout_Delete
+type EventsDocAccessFields_layout {
+  create: EventsDocAccessFields_layout_Create
+  read: EventsDocAccessFields_layout_Read
+  update: EventsDocAccessFields_layout_Update
+  delete: EventsDocAccessFields_layout_Delete
 }
 
-type ProjectsDocAccessFields_layout_Create {
+type EventsDocAccessFields_layout_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_layout_Read {
+type EventsDocAccessFields_layout_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_layout_Update {
+type EventsDocAccessFields_layout_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_layout_Delete {
+type EventsDocAccessFields_layout_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_relatedProjects {
-  create: ProjectsDocAccessFields_relatedProjects_Create
-  read: ProjectsDocAccessFields_relatedProjects_Read
-  update: ProjectsDocAccessFields_relatedProjects_Update
-  delete: ProjectsDocAccessFields_relatedProjects_Delete
+type EventsDocAccessFields_relatedEvents {
+  create: EventsDocAccessFields_relatedEvents_Create
+  read: EventsDocAccessFields_relatedEvents_Read
+  update: EventsDocAccessFields_relatedEvents_Update
+  delete: EventsDocAccessFields_relatedEvents_Delete
 }
 
-type ProjectsDocAccessFields_relatedProjects_Create {
+type EventsDocAccessFields_relatedEvents_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_relatedProjects_Read {
+type EventsDocAccessFields_relatedEvents_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_relatedProjects_Update {
+type EventsDocAccessFields_relatedEvents_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_relatedProjects_Delete {
+type EventsDocAccessFields_relatedEvents_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_slug {
-  create: ProjectsDocAccessFields_slug_Create
-  read: ProjectsDocAccessFields_slug_Read
-  update: ProjectsDocAccessFields_slug_Update
-  delete: ProjectsDocAccessFields_slug_Delete
+type EventsDocAccessFields_slug {
+  create: EventsDocAccessFields_slug_Create
+  read: EventsDocAccessFields_slug_Read
+  update: EventsDocAccessFields_slug_Update
+  delete: EventsDocAccessFields_slug_Delete
 }
 
-type ProjectsDocAccessFields_slug_Create {
+type EventsDocAccessFields_slug_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_slug_Read {
+type EventsDocAccessFields_slug_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_slug_Update {
+type EventsDocAccessFields_slug_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_slug_Delete {
+type EventsDocAccessFields_slug_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta {
-  create: ProjectsDocAccessFields_meta_Create
-  read: ProjectsDocAccessFields_meta_Read
-  update: ProjectsDocAccessFields_meta_Update
-  delete: ProjectsDocAccessFields_meta_Delete
-  fields: ProjectsDocAccessFields_meta_Fields
+type EventsDocAccessFields_meta {
+  create: EventsDocAccessFields_meta_Create
+  read: EventsDocAccessFields_meta_Read
+  update: EventsDocAccessFields_meta_Update
+  delete: EventsDocAccessFields_meta_Delete
+  fields: EventsDocAccessFields_meta_Fields
 }
 
-type ProjectsDocAccessFields_meta_Create {
+type EventsDocAccessFields_meta_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_Read {
+type EventsDocAccessFields_meta_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_Update {
+type EventsDocAccessFields_meta_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_Delete {
+type EventsDocAccessFields_meta_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_Fields {
-  title: ProjectsDocAccessFields_meta_title
-  description: ProjectsDocAccessFields_meta_description
-  image: ProjectsDocAccessFields_meta_image
+type EventsDocAccessFields_meta_Fields {
+  title: EventsDocAccessFields_meta_title
+  description: EventsDocAccessFields_meta_description
+  image: EventsDocAccessFields_meta_image
 }
 
-type ProjectsDocAccessFields_meta_title {
-  create: ProjectsDocAccessFields_meta_title_Create
-  read: ProjectsDocAccessFields_meta_title_Read
-  update: ProjectsDocAccessFields_meta_title_Update
-  delete: ProjectsDocAccessFields_meta_title_Delete
+type EventsDocAccessFields_meta_title {
+  create: EventsDocAccessFields_meta_title_Create
+  read: EventsDocAccessFields_meta_title_Read
+  update: EventsDocAccessFields_meta_title_Update
+  delete: EventsDocAccessFields_meta_title_Delete
 }
 
-type ProjectsDocAccessFields_meta_title_Create {
+type EventsDocAccessFields_meta_title_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_title_Read {
+type EventsDocAccessFields_meta_title_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_title_Update {
+type EventsDocAccessFields_meta_title_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_title_Delete {
+type EventsDocAccessFields_meta_title_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_description {
-  create: ProjectsDocAccessFields_meta_description_Create
-  read: ProjectsDocAccessFields_meta_description_Read
-  update: ProjectsDocAccessFields_meta_description_Update
-  delete: ProjectsDocAccessFields_meta_description_Delete
+type EventsDocAccessFields_meta_description {
+  create: EventsDocAccessFields_meta_description_Create
+  read: EventsDocAccessFields_meta_description_Read
+  update: EventsDocAccessFields_meta_description_Update
+  delete: EventsDocAccessFields_meta_description_Delete
 }
 
-type ProjectsDocAccessFields_meta_description_Create {
+type EventsDocAccessFields_meta_description_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_description_Read {
+type EventsDocAccessFields_meta_description_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_description_Update {
+type EventsDocAccessFields_meta_description_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_description_Delete {
+type EventsDocAccessFields_meta_description_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_image {
-  create: ProjectsDocAccessFields_meta_image_Create
-  read: ProjectsDocAccessFields_meta_image_Read
-  update: ProjectsDocAccessFields_meta_image_Update
-  delete: ProjectsDocAccessFields_meta_image_Delete
+type EventsDocAccessFields_meta_image {
+  create: EventsDocAccessFields_meta_image_Create
+  read: EventsDocAccessFields_meta_image_Read
+  update: EventsDocAccessFields_meta_image_Update
+  delete: EventsDocAccessFields_meta_image_Delete
 }
 
-type ProjectsDocAccessFields_meta_image_Create {
+type EventsDocAccessFields_meta_image_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_image_Read {
+type EventsDocAccessFields_meta_image_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_image_Update {
+type EventsDocAccessFields_meta_image_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_meta_image_Delete {
+type EventsDocAccessFields_meta_image_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_updatedAt {
-  create: ProjectsDocAccessFields_updatedAt_Create
-  read: ProjectsDocAccessFields_updatedAt_Read
-  update: ProjectsDocAccessFields_updatedAt_Update
-  delete: ProjectsDocAccessFields_updatedAt_Delete
+type EventsDocAccessFields_updatedAt {
+  create: EventsDocAccessFields_updatedAt_Create
+  read: EventsDocAccessFields_updatedAt_Read
+  update: EventsDocAccessFields_updatedAt_Update
+  delete: EventsDocAccessFields_updatedAt_Delete
 }
 
-type ProjectsDocAccessFields_updatedAt_Create {
+type EventsDocAccessFields_updatedAt_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_updatedAt_Read {
+type EventsDocAccessFields_updatedAt_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_updatedAt_Update {
+type EventsDocAccessFields_updatedAt_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_updatedAt_Delete {
+type EventsDocAccessFields_updatedAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_createdAt {
-  create: ProjectsDocAccessFields_createdAt_Create
-  read: ProjectsDocAccessFields_createdAt_Read
-  update: ProjectsDocAccessFields_createdAt_Update
-  delete: ProjectsDocAccessFields_createdAt_Delete
+type EventsDocAccessFields_createdAt {
+  create: EventsDocAccessFields_createdAt_Create
+  read: EventsDocAccessFields_createdAt_Read
+  update: EventsDocAccessFields_createdAt_Update
+  delete: EventsDocAccessFields_createdAt_Delete
 }
 
-type ProjectsDocAccessFields_createdAt_Create {
+type EventsDocAccessFields_createdAt_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_createdAt_Read {
+type EventsDocAccessFields_createdAt_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_createdAt_Update {
+type EventsDocAccessFields_createdAt_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields_createdAt_Delete {
+type EventsDocAccessFields_createdAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields__status {
-  create: ProjectsDocAccessFields__status_Create
-  read: ProjectsDocAccessFields__status_Read
-  update: ProjectsDocAccessFields__status_Update
-  delete: ProjectsDocAccessFields__status_Delete
+type EventsDocAccessFields__status {
+  create: EventsDocAccessFields__status_Create
+  read: EventsDocAccessFields__status_Read
+  update: EventsDocAccessFields__status_Update
+  delete: EventsDocAccessFields__status_Delete
 }
 
-type ProjectsDocAccessFields__status_Create {
+type EventsDocAccessFields__status_Create {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields__status_Read {
+type EventsDocAccessFields__status_Read {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields__status_Update {
+type EventsDocAccessFields__status_Update {
   permission: Boolean!
 }
 
-type ProjectsDocAccessFields__status_Delete {
+type EventsDocAccessFields__status_Delete {
   permission: Boolean!
 }
 
-type ProjectsCreateDocAccess {
+type EventsCreateDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsReadDocAccess {
+type EventsReadDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsUpdateDocAccess {
+type EventsUpdateDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsDeleteDocAccess {
+type EventsDeleteDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsReadVersionsDocAccess {
+type EventsReadVersionsDocAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectVersion {
-  parent: Project
-  version: ProjectVersion_Version
+type EventVersion {
+  parent: Event
+  version: EventVersion_Version
   createdAt: DateTime
   updatedAt: DateTime
   latest: Boolean
   id: String
 }
 
-type ProjectVersion_Version {
+type EventVersion_Version {
   title: String
   categories: [Category!]
   publishedAt: DateTime
-  hero: ProjectVersion_Version_Hero
-  layout: [ProjectVersion_Version_Layout!]!
-  relatedProjects: [Project!]
+  hero: EventVersion_Version_Hero
+  layout: [EventVersion_Version_Layout!]!
+  relatedEvents: [Event!]
   slug: String
-  meta: ProjectVersion_Version_Meta
+  meta: EventVersion_Version_Meta
   updatedAt: DateTime
   createdAt: DateTime
-  _status: ProjectVersion_Version__status
+  _status: EventVersion_Version__status
 }
 
-type ProjectVersion_Version_Hero {
-  type: ProjectVersion_Version_Hero_type
+type EventVersion_Version_Hero {
+  type: EventVersion_Version_Hero_type
   richText(depth: Int): JSON
-  links: [ProjectVersion_Version_Hero_Links!]
-  media(where: ProjectVersion_Version_Hero_Media_where): Media
+  links: [EventVersion_Version_Hero_Links!]
+  media(where: EventVersion_Version_Hero_Media_where): Media
 }
 
-enum ProjectVersion_Version_Hero_type {
+enum EventVersion_Version_Hero_type {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-type ProjectVersion_Version_Hero_Links {
-  link: ProjectVersion_Version_Hero_Links_Link
+type EventVersion_Version_Hero_Links {
+  link: EventVersion_Version_Hero_Links_Link
   id: String
 }
 
-type ProjectVersion_Version_Hero_Links_Link {
-  type: ProjectVersion_Version_Hero_Links_Link_type
+type EventVersion_Version_Hero_Links_Link {
+  type: EventVersion_Version_Hero_Links_Link_type
   newTab: Boolean
-  reference: ProjectVersion_Version_Hero_Links_Link_Reference_Relationship
+  reference: EventVersion_Version_Hero_Links_Link_Reference_Relationship
   url: String
   label: String
-  appearance: ProjectVersion_Version_Hero_Links_Link_appearance
+  appearance: EventVersion_Version_Hero_Links_Link_appearance
 }
 
-enum ProjectVersion_Version_Hero_Links_Link_type {
+enum EventVersion_Version_Hero_Links_Link_type {
   reference
   custom
 }
 
-type ProjectVersion_Version_Hero_Links_Link_Reference_Relationship {
-  relationTo: ProjectVersion_Version_Hero_Links_Link_Reference_RelationTo
-  value: ProjectVersion_Version_Hero_Links_Link_Reference
+type EventVersion_Version_Hero_Links_Link_Reference_Relationship {
+  relationTo: EventVersion_Version_Hero_Links_Link_Reference_RelationTo
+  value: EventVersion_Version_Hero_Links_Link_Reference
 }
 
-enum ProjectVersion_Version_Hero_Links_Link_Reference_RelationTo {
+enum EventVersion_Version_Hero_Links_Link_Reference_RelationTo {
   pages
 }
 
-union ProjectVersion_Version_Hero_Links_Link_Reference = Page
+union EventVersion_Version_Hero_Links_Link_Reference = Page
 
-enum ProjectVersion_Version_Hero_Links_Link_appearance {
+enum EventVersion_Version_Hero_Links_Link_appearance {
   default
   primary
   secondary
 }
 
-input ProjectVersion_Version_Hero_Media_where {
-  alt: ProjectVersion_Version_Hero_Media_alt_operator
-  caption: ProjectVersion_Version_Hero_Media_caption_operator
-  updatedAt: ProjectVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: ProjectVersion_Version_Hero_Media_createdAt_operator
-  url: ProjectVersion_Version_Hero_Media_url_operator
-  filename: ProjectVersion_Version_Hero_Media_filename_operator
-  mimeType: ProjectVersion_Version_Hero_Media_mimeType_operator
-  filesize: ProjectVersion_Version_Hero_Media_filesize_operator
-  width: ProjectVersion_Version_Hero_Media_width_operator
-  height: ProjectVersion_Version_Hero_Media_height_operator
-  id: ProjectVersion_Version_Hero_Media_id_operator
-  AND: [ProjectVersion_Version_Hero_Media_where_and]
-  OR: [ProjectVersion_Version_Hero_Media_where_or]
+input EventVersion_Version_Hero_Media_where {
+  alt: EventVersion_Version_Hero_Media_alt_operator
+  caption: EventVersion_Version_Hero_Media_caption_operator
+  updatedAt: EventVersion_Version_Hero_Media_updatedAt_operator
+  createdAt: EventVersion_Version_Hero_Media_createdAt_operator
+  url: EventVersion_Version_Hero_Media_url_operator
+  filename: EventVersion_Version_Hero_Media_filename_operator
+  mimeType: EventVersion_Version_Hero_Media_mimeType_operator
+  filesize: EventVersion_Version_Hero_Media_filesize_operator
+  width: EventVersion_Version_Hero_Media_width_operator
+  height: EventVersion_Version_Hero_Media_height_operator
+  id: EventVersion_Version_Hero_Media_id_operator
+  AND: [EventVersion_Version_Hero_Media_where_and]
+  OR: [EventVersion_Version_Hero_Media_where_or]
 }
 
-input ProjectVersion_Version_Hero_Media_alt_operator {
+input EventVersion_Version_Hero_Media_alt_operator {
   equals: String
   not_equals: String
   like: String
@@ -6633,7 +6633,7 @@ input ProjectVersion_Version_Hero_Media_alt_operator {
   all: [String]
 }
 
-input ProjectVersion_Version_Hero_Media_caption_operator {
+input EventVersion_Version_Hero_Media_caption_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
@@ -6641,7 +6641,7 @@ input ProjectVersion_Version_Hero_Media_caption_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_updatedAt_operator {
+input EventVersion_Version_Hero_Media_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -6652,7 +6652,7 @@ input ProjectVersion_Version_Hero_Media_updatedAt_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_createdAt_operator {
+input EventVersion_Version_Hero_Media_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -6663,7 +6663,7 @@ input ProjectVersion_Version_Hero_Media_createdAt_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_url_operator {
+input EventVersion_Version_Hero_Media_url_operator {
   equals: String
   not_equals: String
   like: String
@@ -6674,7 +6674,7 @@ input ProjectVersion_Version_Hero_Media_url_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_filename_operator {
+input EventVersion_Version_Hero_Media_filename_operator {
   equals: String
   not_equals: String
   like: String
@@ -6685,7 +6685,7 @@ input ProjectVersion_Version_Hero_Media_filename_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_mimeType_operator {
+input EventVersion_Version_Hero_Media_mimeType_operator {
   equals: String
   not_equals: String
   like: String
@@ -6696,7 +6696,7 @@ input ProjectVersion_Version_Hero_Media_mimeType_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_filesize_operator {
+input EventVersion_Version_Hero_Media_filesize_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6706,7 +6706,7 @@ input ProjectVersion_Version_Hero_Media_filesize_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_width_operator {
+input EventVersion_Version_Hero_Media_width_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6716,7 +6716,7 @@ input ProjectVersion_Version_Hero_Media_width_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_height_operator {
+input EventVersion_Version_Hero_Media_height_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6726,7 +6726,7 @@ input ProjectVersion_Version_Hero_Media_height_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_id_operator {
+input EventVersion_Version_Hero_Media_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -6737,63 +6737,63 @@ input ProjectVersion_Version_Hero_Media_id_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Hero_Media_where_and {
-  alt: ProjectVersion_Version_Hero_Media_alt_operator
-  caption: ProjectVersion_Version_Hero_Media_caption_operator
-  updatedAt: ProjectVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: ProjectVersion_Version_Hero_Media_createdAt_operator
-  url: ProjectVersion_Version_Hero_Media_url_operator
-  filename: ProjectVersion_Version_Hero_Media_filename_operator
-  mimeType: ProjectVersion_Version_Hero_Media_mimeType_operator
-  filesize: ProjectVersion_Version_Hero_Media_filesize_operator
-  width: ProjectVersion_Version_Hero_Media_width_operator
-  height: ProjectVersion_Version_Hero_Media_height_operator
-  id: ProjectVersion_Version_Hero_Media_id_operator
-  AND: [ProjectVersion_Version_Hero_Media_where_and]
-  OR: [ProjectVersion_Version_Hero_Media_where_or]
+input EventVersion_Version_Hero_Media_where_and {
+  alt: EventVersion_Version_Hero_Media_alt_operator
+  caption: EventVersion_Version_Hero_Media_caption_operator
+  updatedAt: EventVersion_Version_Hero_Media_updatedAt_operator
+  createdAt: EventVersion_Version_Hero_Media_createdAt_operator
+  url: EventVersion_Version_Hero_Media_url_operator
+  filename: EventVersion_Version_Hero_Media_filename_operator
+  mimeType: EventVersion_Version_Hero_Media_mimeType_operator
+  filesize: EventVersion_Version_Hero_Media_filesize_operator
+  width: EventVersion_Version_Hero_Media_width_operator
+  height: EventVersion_Version_Hero_Media_height_operator
+  id: EventVersion_Version_Hero_Media_id_operator
+  AND: [EventVersion_Version_Hero_Media_where_and]
+  OR: [EventVersion_Version_Hero_Media_where_or]
 }
 
-input ProjectVersion_Version_Hero_Media_where_or {
-  alt: ProjectVersion_Version_Hero_Media_alt_operator
-  caption: ProjectVersion_Version_Hero_Media_caption_operator
-  updatedAt: ProjectVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: ProjectVersion_Version_Hero_Media_createdAt_operator
-  url: ProjectVersion_Version_Hero_Media_url_operator
-  filename: ProjectVersion_Version_Hero_Media_filename_operator
-  mimeType: ProjectVersion_Version_Hero_Media_mimeType_operator
-  filesize: ProjectVersion_Version_Hero_Media_filesize_operator
-  width: ProjectVersion_Version_Hero_Media_width_operator
-  height: ProjectVersion_Version_Hero_Media_height_operator
-  id: ProjectVersion_Version_Hero_Media_id_operator
-  AND: [ProjectVersion_Version_Hero_Media_where_and]
-  OR: [ProjectVersion_Version_Hero_Media_where_or]
+input EventVersion_Version_Hero_Media_where_or {
+  alt: EventVersion_Version_Hero_Media_alt_operator
+  caption: EventVersion_Version_Hero_Media_caption_operator
+  updatedAt: EventVersion_Version_Hero_Media_updatedAt_operator
+  createdAt: EventVersion_Version_Hero_Media_createdAt_operator
+  url: EventVersion_Version_Hero_Media_url_operator
+  filename: EventVersion_Version_Hero_Media_filename_operator
+  mimeType: EventVersion_Version_Hero_Media_mimeType_operator
+  filesize: EventVersion_Version_Hero_Media_filesize_operator
+  width: EventVersion_Version_Hero_Media_width_operator
+  height: EventVersion_Version_Hero_Media_height_operator
+  id: EventVersion_Version_Hero_Media_id_operator
+  AND: [EventVersion_Version_Hero_Media_where_and]
+  OR: [EventVersion_Version_Hero_Media_where_or]
 }
 
-union ProjectVersion_Version_Layout = Cta | Content | MediaBlock | Archive
+union EventVersion_Version_Layout = Cta | Content | MediaBlock | Archive
 
-type ProjectVersion_Version_Meta {
+type EventVersion_Version_Meta {
   title: String
   description: String
-  image(where: ProjectVersion_Version_Meta_Image_where): Media
+  image(where: EventVersion_Version_Meta_Image_where): Media
 }
 
-input ProjectVersion_Version_Meta_Image_where {
-  alt: ProjectVersion_Version_Meta_Image_alt_operator
-  caption: ProjectVersion_Version_Meta_Image_caption_operator
-  updatedAt: ProjectVersion_Version_Meta_Image_updatedAt_operator
-  createdAt: ProjectVersion_Version_Meta_Image_createdAt_operator
-  url: ProjectVersion_Version_Meta_Image_url_operator
-  filename: ProjectVersion_Version_Meta_Image_filename_operator
-  mimeType: ProjectVersion_Version_Meta_Image_mimeType_operator
-  filesize: ProjectVersion_Version_Meta_Image_filesize_operator
-  width: ProjectVersion_Version_Meta_Image_width_operator
-  height: ProjectVersion_Version_Meta_Image_height_operator
-  id: ProjectVersion_Version_Meta_Image_id_operator
-  AND: [ProjectVersion_Version_Meta_Image_where_and]
-  OR: [ProjectVersion_Version_Meta_Image_where_or]
+input EventVersion_Version_Meta_Image_where {
+  alt: EventVersion_Version_Meta_Image_alt_operator
+  caption: EventVersion_Version_Meta_Image_caption_operator
+  updatedAt: EventVersion_Version_Meta_Image_updatedAt_operator
+  createdAt: EventVersion_Version_Meta_Image_createdAt_operator
+  url: EventVersion_Version_Meta_Image_url_operator
+  filename: EventVersion_Version_Meta_Image_filename_operator
+  mimeType: EventVersion_Version_Meta_Image_mimeType_operator
+  filesize: EventVersion_Version_Meta_Image_filesize_operator
+  width: EventVersion_Version_Meta_Image_width_operator
+  height: EventVersion_Version_Meta_Image_height_operator
+  id: EventVersion_Version_Meta_Image_id_operator
+  AND: [EventVersion_Version_Meta_Image_where_and]
+  OR: [EventVersion_Version_Meta_Image_where_or]
 }
 
-input ProjectVersion_Version_Meta_Image_alt_operator {
+input EventVersion_Version_Meta_Image_alt_operator {
   equals: String
   not_equals: String
   like: String
@@ -6803,7 +6803,7 @@ input ProjectVersion_Version_Meta_Image_alt_operator {
   all: [String]
 }
 
-input ProjectVersion_Version_Meta_Image_caption_operator {
+input EventVersion_Version_Meta_Image_caption_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
@@ -6811,7 +6811,7 @@ input ProjectVersion_Version_Meta_Image_caption_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_updatedAt_operator {
+input EventVersion_Version_Meta_Image_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -6822,7 +6822,7 @@ input ProjectVersion_Version_Meta_Image_updatedAt_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_createdAt_operator {
+input EventVersion_Version_Meta_Image_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -6833,7 +6833,7 @@ input ProjectVersion_Version_Meta_Image_createdAt_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_url_operator {
+input EventVersion_Version_Meta_Image_url_operator {
   equals: String
   not_equals: String
   like: String
@@ -6844,7 +6844,7 @@ input ProjectVersion_Version_Meta_Image_url_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_filename_operator {
+input EventVersion_Version_Meta_Image_filename_operator {
   equals: String
   not_equals: String
   like: String
@@ -6855,7 +6855,7 @@ input ProjectVersion_Version_Meta_Image_filename_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_mimeType_operator {
+input EventVersion_Version_Meta_Image_mimeType_operator {
   equals: String
   not_equals: String
   like: String
@@ -6866,7 +6866,7 @@ input ProjectVersion_Version_Meta_Image_mimeType_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_filesize_operator {
+input EventVersion_Version_Meta_Image_filesize_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6876,7 +6876,7 @@ input ProjectVersion_Version_Meta_Image_filesize_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_width_operator {
+input EventVersion_Version_Meta_Image_width_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6886,7 +6886,7 @@ input ProjectVersion_Version_Meta_Image_width_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_height_operator {
+input EventVersion_Version_Meta_Image_height_operator {
   equals: Float
   not_equals: Float
   greater_than_equal: Float
@@ -6896,7 +6896,7 @@ input ProjectVersion_Version_Meta_Image_height_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_id_operator {
+input EventVersion_Version_Meta_Image_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -6907,45 +6907,45 @@ input ProjectVersion_Version_Meta_Image_id_operator {
   exists: Boolean
 }
 
-input ProjectVersion_Version_Meta_Image_where_and {
-  alt: ProjectVersion_Version_Meta_Image_alt_operator
-  caption: ProjectVersion_Version_Meta_Image_caption_operator
-  updatedAt: ProjectVersion_Version_Meta_Image_updatedAt_operator
-  createdAt: ProjectVersion_Version_Meta_Image_createdAt_operator
-  url: ProjectVersion_Version_Meta_Image_url_operator
-  filename: ProjectVersion_Version_Meta_Image_filename_operator
-  mimeType: ProjectVersion_Version_Meta_Image_mimeType_operator
-  filesize: ProjectVersion_Version_Meta_Image_filesize_operator
-  width: ProjectVersion_Version_Meta_Image_width_operator
-  height: ProjectVersion_Version_Meta_Image_height_operator
-  id: ProjectVersion_Version_Meta_Image_id_operator
-  AND: [ProjectVersion_Version_Meta_Image_where_and]
-  OR: [ProjectVersion_Version_Meta_Image_where_or]
+input EventVersion_Version_Meta_Image_where_and {
+  alt: EventVersion_Version_Meta_Image_alt_operator
+  caption: EventVersion_Version_Meta_Image_caption_operator
+  updatedAt: EventVersion_Version_Meta_Image_updatedAt_operator
+  createdAt: EventVersion_Version_Meta_Image_createdAt_operator
+  url: EventVersion_Version_Meta_Image_url_operator
+  filename: EventVersion_Version_Meta_Image_filename_operator
+  mimeType: EventVersion_Version_Meta_Image_mimeType_operator
+  filesize: EventVersion_Version_Meta_Image_filesize_operator
+  width: EventVersion_Version_Meta_Image_width_operator
+  height: EventVersion_Version_Meta_Image_height_operator
+  id: EventVersion_Version_Meta_Image_id_operator
+  AND: [EventVersion_Version_Meta_Image_where_and]
+  OR: [EventVersion_Version_Meta_Image_where_or]
 }
 
-input ProjectVersion_Version_Meta_Image_where_or {
-  alt: ProjectVersion_Version_Meta_Image_alt_operator
-  caption: ProjectVersion_Version_Meta_Image_caption_operator
-  updatedAt: ProjectVersion_Version_Meta_Image_updatedAt_operator
-  createdAt: ProjectVersion_Version_Meta_Image_createdAt_operator
-  url: ProjectVersion_Version_Meta_Image_url_operator
-  filename: ProjectVersion_Version_Meta_Image_filename_operator
-  mimeType: ProjectVersion_Version_Meta_Image_mimeType_operator
-  filesize: ProjectVersion_Version_Meta_Image_filesize_operator
-  width: ProjectVersion_Version_Meta_Image_width_operator
-  height: ProjectVersion_Version_Meta_Image_height_operator
-  id: ProjectVersion_Version_Meta_Image_id_operator
-  AND: [ProjectVersion_Version_Meta_Image_where_and]
-  OR: [ProjectVersion_Version_Meta_Image_where_or]
+input EventVersion_Version_Meta_Image_where_or {
+  alt: EventVersion_Version_Meta_Image_alt_operator
+  caption: EventVersion_Version_Meta_Image_caption_operator
+  updatedAt: EventVersion_Version_Meta_Image_updatedAt_operator
+  createdAt: EventVersion_Version_Meta_Image_createdAt_operator
+  url: EventVersion_Version_Meta_Image_url_operator
+  filename: EventVersion_Version_Meta_Image_filename_operator
+  mimeType: EventVersion_Version_Meta_Image_mimeType_operator
+  filesize: EventVersion_Version_Meta_Image_filesize_operator
+  width: EventVersion_Version_Meta_Image_width_operator
+  height: EventVersion_Version_Meta_Image_height_operator
+  id: EventVersion_Version_Meta_Image_id_operator
+  AND: [EventVersion_Version_Meta_Image_where_and]
+  OR: [EventVersion_Version_Meta_Image_where_or]
 }
 
-enum ProjectVersion_Version__status {
+enum EventVersion_Version__status {
   draft
   published
 }
 
-type versionsProjects {
-  docs: [ProjectVersion]
+type versionsEvents {
+  docs: [EventVersion]
   hasNextPage: Boolean
   hasPrevPage: Boolean
   limit: Int
@@ -6958,38 +6958,38 @@ type versionsProjects {
   totalPages: Int
 }
 
-input versionsProject_where {
-  parent: versionsProject_parent_operator
-  version__title: versionsProject_version__title_operator
-  version__categories: versionsProject_version__categories_operator
-  version__publishedAt: versionsProject_version__publishedAt_operator
-  version__hero__type: versionsProject_version__hero__type_operator
-  version__hero__richText: versionsProject_version__hero__richText_operator
-  version__hero__links__link__type: versionsProject_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsProject_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsProject_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsProject_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsProject_version__hero__links__link__label_operator
-  version__hero__links__link__appearance: versionsProject_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsProject_version__hero__links__id_operator
-  version__hero__media: versionsProject_version__hero__media_operator
-  version__relatedProjects: versionsProject_version__relatedProjects_operator
-  version__slug: versionsProject_version__slug_operator
-  version__meta__title: versionsProject_version__meta__title_operator
-  version__meta__description: versionsProject_version__meta__description_operator
-  version__meta__image: versionsProject_version__meta__image_operator
-  version__updatedAt: versionsProject_version__updatedAt_operator
-  version__createdAt: versionsProject_version__createdAt_operator
-  version___status: versionsProject_version___status_operator
-  createdAt: versionsProject_createdAt_operator
-  updatedAt: versionsProject_updatedAt_operator
-  latest: versionsProject_latest_operator
-  id: versionsProject_id_operator
-  AND: [versionsProject_where_and]
-  OR: [versionsProject_where_or]
+input versionsEvent_where {
+  parent: versionsEvent_parent_operator
+  version__title: versionsEvent_version__title_operator
+  version__categories: versionsEvent_version__categories_operator
+  version__publishedAt: versionsEvent_version__publishedAt_operator
+  version__hero__type: versionsEvent_version__hero__type_operator
+  version__hero__richText: versionsEvent_version__hero__richText_operator
+  version__hero__links__link__type: versionsEvent_version__hero__links__link__type_operator
+  version__hero__links__link__newTab: versionsEvent_version__hero__links__link__newTab_operator
+  version__hero__links__link__reference: versionsEvent_version__hero__links__link__reference_Relation
+  version__hero__links__link__url: versionsEvent_version__hero__links__link__url_operator
+  version__hero__links__link__label: versionsEvent_version__hero__links__link__label_operator
+  version__hero__links__link__appearance: versionsEvent_version__hero__links__link__appearance_operator
+  version__hero__links__id: versionsEvent_version__hero__links__id_operator
+  version__hero__media: versionsEvent_version__hero__media_operator
+  version__relatedEvents: versionsEvent_version__relatedEvents_operator
+  version__slug: versionsEvent_version__slug_operator
+  version__meta__title: versionsEvent_version__meta__title_operator
+  version__meta__description: versionsEvent_version__meta__description_operator
+  version__meta__image: versionsEvent_version__meta__image_operator
+  version__updatedAt: versionsEvent_version__updatedAt_operator
+  version__createdAt: versionsEvent_version__createdAt_operator
+  version___status: versionsEvent_version___status_operator
+  createdAt: versionsEvent_createdAt_operator
+  updatedAt: versionsEvent_updatedAt_operator
+  latest: versionsEvent_latest_operator
+  id: versionsEvent_id_operator
+  AND: [versionsEvent_where_and]
+  OR: [versionsEvent_where_or]
 }
 
-input versionsProject_parent_operator {
+input versionsEvent_parent_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -6998,7 +6998,7 @@ input versionsProject_parent_operator {
   exists: Boolean
 }
 
-input versionsProject_version__title_operator {
+input versionsEvent_version__title_operator {
   equals: String
   not_equals: String
   like: String
@@ -7008,7 +7008,7 @@ input versionsProject_version__title_operator {
   all: [String]
 }
 
-input versionsProject_version__categories_operator {
+input versionsEvent_version__categories_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -7017,7 +7017,7 @@ input versionsProject_version__categories_operator {
   exists: Boolean
 }
 
-input versionsProject_version__publishedAt_operator {
+input versionsEvent_version__publishedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -7028,57 +7028,57 @@ input versionsProject_version__publishedAt_operator {
   exists: Boolean
 }
 
-input versionsProject_version__hero__type_operator {
-  equals: versionsProject_version__hero__type_Input
-  not_equals: versionsProject_version__hero__type_Input
-  in: [versionsProject_version__hero__type_Input]
-  not_in: [versionsProject_version__hero__type_Input]
-  all: [versionsProject_version__hero__type_Input]
+input versionsEvent_version__hero__type_operator {
+  equals: versionsEvent_version__hero__type_Input
+  not_equals: versionsEvent_version__hero__type_Input
+  in: [versionsEvent_version__hero__type_Input]
+  not_in: [versionsEvent_version__hero__type_Input]
+  all: [versionsEvent_version__hero__type_Input]
 }
 
-enum versionsProject_version__hero__type_Input {
+enum versionsEvent_version__hero__type_Input {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-input versionsProject_version__hero__richText_operator {
+input versionsEvent_version__hero__richText_operator {
   equals: JSON
   not_equals: JSON
   like: JSON
   contains: JSON
 }
 
-input versionsProject_version__hero__links__link__type_operator {
-  equals: versionsProject_version__hero__links__link__type_Input
-  not_equals: versionsProject_version__hero__links__link__type_Input
-  like: versionsProject_version__hero__links__link__type_Input
-  contains: versionsProject_version__hero__links__link__type_Input
+input versionsEvent_version__hero__links__link__type_operator {
+  equals: versionsEvent_version__hero__links__link__type_Input
+  not_equals: versionsEvent_version__hero__links__link__type_Input
+  like: versionsEvent_version__hero__links__link__type_Input
+  contains: versionsEvent_version__hero__links__link__type_Input
   exists: Boolean
 }
 
-enum versionsProject_version__hero__links__link__type_Input {
+enum versionsEvent_version__hero__links__link__type_Input {
   reference
   custom
 }
 
-input versionsProject_version__hero__links__link__newTab_operator {
+input versionsEvent_version__hero__links__link__newTab_operator {
   equals: Boolean
   not_equals: Boolean
   exists: Boolean
 }
 
-input versionsProject_version__hero__links__link__reference_Relation {
-  relationTo: versionsProject_version__hero__links__link__reference_Relation_RelationTo
+input versionsEvent_version__hero__links__link__reference_Relation {
+  relationTo: versionsEvent_version__hero__links__link__reference_Relation_RelationTo
   value: JSON
 }
 
-enum versionsProject_version__hero__links__link__reference_Relation_RelationTo {
+enum versionsEvent_version__hero__links__link__reference_Relation_RelationTo {
   pages
 }
 
-input versionsProject_version__hero__links__link__url_operator {
+input versionsEvent_version__hero__links__link__url_operator {
   equals: String
   not_equals: String
   like: String
@@ -7088,7 +7088,7 @@ input versionsProject_version__hero__links__link__url_operator {
   all: [String]
 }
 
-input versionsProject_version__hero__links__link__label_operator {
+input versionsEvent_version__hero__links__link__label_operator {
   equals: String
   not_equals: String
   like: String
@@ -7098,22 +7098,22 @@ input versionsProject_version__hero__links__link__label_operator {
   all: [String]
 }
 
-input versionsProject_version__hero__links__link__appearance_operator {
-  equals: versionsProject_version__hero__links__link__appearance_Input
-  not_equals: versionsProject_version__hero__links__link__appearance_Input
-  in: [versionsProject_version__hero__links__link__appearance_Input]
-  not_in: [versionsProject_version__hero__links__link__appearance_Input]
-  all: [versionsProject_version__hero__links__link__appearance_Input]
+input versionsEvent_version__hero__links__link__appearance_operator {
+  equals: versionsEvent_version__hero__links__link__appearance_Input
+  not_equals: versionsEvent_version__hero__links__link__appearance_Input
+  in: [versionsEvent_version__hero__links__link__appearance_Input]
+  not_in: [versionsEvent_version__hero__links__link__appearance_Input]
+  all: [versionsEvent_version__hero__links__link__appearance_Input]
   exists: Boolean
 }
 
-enum versionsProject_version__hero__links__link__appearance_Input {
+enum versionsEvent_version__hero__links__link__appearance_Input {
   default
   primary
   secondary
 }
 
-input versionsProject_version__hero__links__id_operator {
+input versionsEvent_version__hero__links__id_operator {
   equals: String
   not_equals: String
   like: String
@@ -7124,12 +7124,12 @@ input versionsProject_version__hero__links__id_operator {
   exists: Boolean
 }
 
-input versionsProject_version__hero__media_operator {
+input versionsEvent_version__hero__media_operator {
   equals: String
   not_equals: String
 }
 
-input versionsProject_version__relatedProjects_operator {
+input versionsEvent_version__relatedEvents_operator {
   equals: JSON
   not_equals: JSON
   in: [JSON]
@@ -7138,7 +7138,7 @@ input versionsProject_version__relatedProjects_operator {
   exists: Boolean
 }
 
-input versionsProject_version__slug_operator {
+input versionsEvent_version__slug_operator {
   equals: String
   not_equals: String
   like: String
@@ -7149,7 +7149,7 @@ input versionsProject_version__slug_operator {
   exists: Boolean
 }
 
-input versionsProject_version__meta__title_operator {
+input versionsEvent_version__meta__title_operator {
   equals: String
   not_equals: String
   like: String
@@ -7160,7 +7160,7 @@ input versionsProject_version__meta__title_operator {
   exists: Boolean
 }
 
-input versionsProject_version__meta__description_operator {
+input versionsEvent_version__meta__description_operator {
   equals: String
   not_equals: String
   like: String
@@ -7168,13 +7168,13 @@ input versionsProject_version__meta__description_operator {
   exists: Boolean
 }
 
-input versionsProject_version__meta__image_operator {
+input versionsEvent_version__meta__image_operator {
   equals: String
   not_equals: String
   exists: Boolean
 }
 
-input versionsProject_version__updatedAt_operator {
+input versionsEvent_version__updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -7185,7 +7185,7 @@ input versionsProject_version__updatedAt_operator {
   exists: Boolean
 }
 
-input versionsProject_version__createdAt_operator {
+input versionsEvent_version__createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -7196,21 +7196,21 @@ input versionsProject_version__createdAt_operator {
   exists: Boolean
 }
 
-input versionsProject_version___status_operator {
-  equals: versionsProject_version___status_Input
-  not_equals: versionsProject_version___status_Input
-  in: [versionsProject_version___status_Input]
-  not_in: [versionsProject_version___status_Input]
-  all: [versionsProject_version___status_Input]
+input versionsEvent_version___status_operator {
+  equals: versionsEvent_version___status_Input
+  not_equals: versionsEvent_version___status_Input
+  in: [versionsEvent_version___status_Input]
+  not_in: [versionsEvent_version___status_Input]
+  all: [versionsEvent_version___status_Input]
   exists: Boolean
 }
 
-enum versionsProject_version___status_Input {
+enum versionsEvent_version___status_Input {
   draft
   published
 }
 
-input versionsProject_createdAt_operator {
+input versionsEvent_createdAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -7221,7 +7221,7 @@ input versionsProject_createdAt_operator {
   exists: Boolean
 }
 
-input versionsProject_updatedAt_operator {
+input versionsEvent_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
   greater_than_equal: DateTime
@@ -7232,13 +7232,13 @@ input versionsProject_updatedAt_operator {
   exists: Boolean
 }
 
-input versionsProject_latest_operator {
+input versionsEvent_latest_operator {
   equals: Boolean
   not_equals: Boolean
   exists: Boolean
 }
 
-input versionsProject_id_operator {
+input versionsEvent_id_operator {
   equals: String
   not_equals: String
   like: String
@@ -7249,66 +7249,66 @@ input versionsProject_id_operator {
   exists: Boolean
 }
 
-input versionsProject_where_and {
-  parent: versionsProject_parent_operator
-  version__title: versionsProject_version__title_operator
-  version__categories: versionsProject_version__categories_operator
-  version__publishedAt: versionsProject_version__publishedAt_operator
-  version__hero__type: versionsProject_version__hero__type_operator
-  version__hero__richText: versionsProject_version__hero__richText_operator
-  version__hero__links__link__type: versionsProject_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsProject_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsProject_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsProject_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsProject_version__hero__links__link__label_operator
-  version__hero__links__link__appearance: versionsProject_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsProject_version__hero__links__id_operator
-  version__hero__media: versionsProject_version__hero__media_operator
-  version__relatedProjects: versionsProject_version__relatedProjects_operator
-  version__slug: versionsProject_version__slug_operator
-  version__meta__title: versionsProject_version__meta__title_operator
-  version__meta__description: versionsProject_version__meta__description_operator
-  version__meta__image: versionsProject_version__meta__image_operator
-  version__updatedAt: versionsProject_version__updatedAt_operator
-  version__createdAt: versionsProject_version__createdAt_operator
-  version___status: versionsProject_version___status_operator
-  createdAt: versionsProject_createdAt_operator
-  updatedAt: versionsProject_updatedAt_operator
-  latest: versionsProject_latest_operator
-  id: versionsProject_id_operator
-  AND: [versionsProject_where_and]
-  OR: [versionsProject_where_or]
+input versionsEvent_where_and {
+  parent: versionsEvent_parent_operator
+  version__title: versionsEvent_version__title_operator
+  version__categories: versionsEvent_version__categories_operator
+  version__publishedAt: versionsEvent_version__publishedAt_operator
+  version__hero__type: versionsEvent_version__hero__type_operator
+  version__hero__richText: versionsEvent_version__hero__richText_operator
+  version__hero__links__link__type: versionsEvent_version__hero__links__link__type_operator
+  version__hero__links__link__newTab: versionsEvent_version__hero__links__link__newTab_operator
+  version__hero__links__link__reference: versionsEvent_version__hero__links__link__reference_Relation
+  version__hero__links__link__url: versionsEvent_version__hero__links__link__url_operator
+  version__hero__links__link__label: versionsEvent_version__hero__links__link__label_operator
+  version__hero__links__link__appearance: versionsEvent_version__hero__links__link__appearance_operator
+  version__hero__links__id: versionsEvent_version__hero__links__id_operator
+  version__hero__media: versionsEvent_version__hero__media_operator
+  version__relatedEvents: versionsEvent_version__relatedEvents_operator
+  version__slug: versionsEvent_version__slug_operator
+  version__meta__title: versionsEvent_version__meta__title_operator
+  version__meta__description: versionsEvent_version__meta__description_operator
+  version__meta__image: versionsEvent_version__meta__image_operator
+  version__updatedAt: versionsEvent_version__updatedAt_operator
+  version__createdAt: versionsEvent_version__createdAt_operator
+  version___status: versionsEvent_version___status_operator
+  createdAt: versionsEvent_createdAt_operator
+  updatedAt: versionsEvent_updatedAt_operator
+  latest: versionsEvent_latest_operator
+  id: versionsEvent_id_operator
+  AND: [versionsEvent_where_and]
+  OR: [versionsEvent_where_or]
 }
 
-input versionsProject_where_or {
-  parent: versionsProject_parent_operator
-  version__title: versionsProject_version__title_operator
-  version__categories: versionsProject_version__categories_operator
-  version__publishedAt: versionsProject_version__publishedAt_operator
-  version__hero__type: versionsProject_version__hero__type_operator
-  version__hero__richText: versionsProject_version__hero__richText_operator
-  version__hero__links__link__type: versionsProject_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsProject_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsProject_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsProject_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsProject_version__hero__links__link__label_operator
-  version__hero__links__link__appearance: versionsProject_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsProject_version__hero__links__id_operator
-  version__hero__media: versionsProject_version__hero__media_operator
-  version__relatedProjects: versionsProject_version__relatedProjects_operator
-  version__slug: versionsProject_version__slug_operator
-  version__meta__title: versionsProject_version__meta__title_operator
-  version__meta__description: versionsProject_version__meta__description_operator
-  version__meta__image: versionsProject_version__meta__image_operator
-  version__updatedAt: versionsProject_version__updatedAt_operator
-  version__createdAt: versionsProject_version__createdAt_operator
-  version___status: versionsProject_version___status_operator
-  createdAt: versionsProject_createdAt_operator
-  updatedAt: versionsProject_updatedAt_operator
-  latest: versionsProject_latest_operator
-  id: versionsProject_id_operator
-  AND: [versionsProject_where_and]
-  OR: [versionsProject_where_or]
+input versionsEvent_where_or {
+  parent: versionsEvent_parent_operator
+  version__title: versionsEvent_version__title_operator
+  version__categories: versionsEvent_version__categories_operator
+  version__publishedAt: versionsEvent_version__publishedAt_operator
+  version__hero__type: versionsEvent_version__hero__type_operator
+  version__hero__richText: versionsEvent_version__hero__richText_operator
+  version__hero__links__link__type: versionsEvent_version__hero__links__link__type_operator
+  version__hero__links__link__newTab: versionsEvent_version__hero__links__link__newTab_operator
+  version__hero__links__link__reference: versionsEvent_version__hero__links__link__reference_Relation
+  version__hero__links__link__url: versionsEvent_version__hero__links__link__url_operator
+  version__hero__links__link__label: versionsEvent_version__hero__links__link__label_operator
+  version__hero__links__link__appearance: versionsEvent_version__hero__links__link__appearance_operator
+  version__hero__links__id: versionsEvent_version__hero__links__id_operator
+  version__hero__media: versionsEvent_version__hero__media_operator
+  version__relatedEvents: versionsEvent_version__relatedEvents_operator
+  version__slug: versionsEvent_version__slug_operator
+  version__meta__title: versionsEvent_version__meta__title_operator
+  version__meta__description: versionsEvent_version__meta__description_operator
+  version__meta__image: versionsEvent_version__meta__image_operator
+  version__updatedAt: versionsEvent_version__updatedAt_operator
+  version__createdAt: versionsEvent_version__createdAt_operator
+  version___status: versionsEvent_version___status_operator
+  createdAt: versionsEvent_createdAt_operator
+  updatedAt: versionsEvent_updatedAt_operator
+  latest: versionsEvent_latest_operator
+  id: versionsEvent_id_operator
+  AND: [versionsEvent_where_and]
+  OR: [versionsEvent_where_or]
 }
 
 type allMedia {
@@ -9106,7 +9106,7 @@ type PayloadPreferencesDeleteDocAccess {
 
 type Settings {
   postsPage: Page
-  projectsPage: Page
+  eventsPage: Page
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -9119,7 +9119,7 @@ type settingsDocAccess {
 
 type SettingsDocAccessFields {
   postsPage: SettingsDocAccessFields_postsPage
-  projectsPage: SettingsDocAccessFields_projectsPage
+  eventsPage: SettingsDocAccessFields_eventsPage
   updatedAt: SettingsDocAccessFields_updatedAt
   createdAt: SettingsDocAccessFields_createdAt
 }
@@ -9147,26 +9147,26 @@ type SettingsDocAccessFields_postsPage_Delete {
   permission: Boolean!
 }
 
-type SettingsDocAccessFields_projectsPage {
-  create: SettingsDocAccessFields_projectsPage_Create
-  read: SettingsDocAccessFields_projectsPage_Read
-  update: SettingsDocAccessFields_projectsPage_Update
-  delete: SettingsDocAccessFields_projectsPage_Delete
+type SettingsDocAccessFields_eventsPage {
+  create: SettingsDocAccessFields_eventsPage_Create
+  read: SettingsDocAccessFields_eventsPage_Read
+  update: SettingsDocAccessFields_eventsPage_Update
+  delete: SettingsDocAccessFields_eventsPage_Delete
 }
 
-type SettingsDocAccessFields_projectsPage_Create {
+type SettingsDocAccessFields_eventsPage_Create {
   permission: Boolean!
 }
 
-type SettingsDocAccessFields_projectsPage_Read {
+type SettingsDocAccessFields_eventsPage_Read {
   permission: Boolean!
 }
 
-type SettingsDocAccessFields_projectsPage_Update {
+type SettingsDocAccessFields_eventsPage_Update {
   permission: Boolean!
 }
 
-type SettingsDocAccessFields_projectsPage_Delete {
+type SettingsDocAccessFields_eventsPage_Delete {
   permission: Boolean!
 }
 
@@ -9834,7 +9834,7 @@ type Access {
   canAccessAdmin: Boolean!
   pages: pagesAccess
   posts: postsAccess
-  projects: projectsAccess
+  events: eventsAccess
   media: mediaAccess
   categories: categoriesAccess
   users: usersAccess
@@ -11299,679 +11299,679 @@ type PostsReadVersionsAccess {
   where: JSONObject
 }
 
-type projectsAccess {
-  fields: ProjectsFields
-  create: ProjectsCreateAccess
-  read: ProjectsReadAccess
-  update: ProjectsUpdateAccess
-  delete: ProjectsDeleteAccess
-  readVersions: ProjectsReadVersionsAccess
+type eventsAccess {
+  fields: EventsFields
+  create: EventsCreateAccess
+  read: EventsReadAccess
+  update: EventsUpdateAccess
+  delete: EventsDeleteAccess
+  readVersions: EventsReadVersionsAccess
 }
 
-type ProjectsFields {
-  title: ProjectsFields_title
-  categories: ProjectsFields_categories
-  publishedAt: ProjectsFields_publishedAt
-  hero: ProjectsFields_hero
-  layout: ProjectsFields_layout
-  relatedProjects: ProjectsFields_relatedProjects
-  slug: ProjectsFields_slug
-  meta: ProjectsFields_meta
-  updatedAt: ProjectsFields_updatedAt
-  createdAt: ProjectsFields_createdAt
-  _status: ProjectsFields__status
+type EventsFields {
+  title: EventsFields_title
+  categories: EventsFields_categories
+  publishedAt: EventsFields_publishedAt
+  hero: EventsFields_hero
+  layout: EventsFields_layout
+  relatedEvents: EventsFields_relatedEvents
+  slug: EventsFields_slug
+  meta: EventsFields_meta
+  updatedAt: EventsFields_updatedAt
+  createdAt: EventsFields_createdAt
+  _status: EventsFields__status
 }
 
-type ProjectsFields_title {
-  create: ProjectsFields_title_Create
-  read: ProjectsFields_title_Read
-  update: ProjectsFields_title_Update
-  delete: ProjectsFields_title_Delete
+type EventsFields_title {
+  create: EventsFields_title_Create
+  read: EventsFields_title_Read
+  update: EventsFields_title_Update
+  delete: EventsFields_title_Delete
 }
 
-type ProjectsFields_title_Create {
+type EventsFields_title_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_title_Read {
+type EventsFields_title_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_title_Update {
+type EventsFields_title_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_title_Delete {
+type EventsFields_title_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_categories {
-  create: ProjectsFields_categories_Create
-  read: ProjectsFields_categories_Read
-  update: ProjectsFields_categories_Update
-  delete: ProjectsFields_categories_Delete
+type EventsFields_categories {
+  create: EventsFields_categories_Create
+  read: EventsFields_categories_Read
+  update: EventsFields_categories_Update
+  delete: EventsFields_categories_Delete
 }
 
-type ProjectsFields_categories_Create {
+type EventsFields_categories_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_categories_Read {
+type EventsFields_categories_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_categories_Update {
+type EventsFields_categories_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_categories_Delete {
+type EventsFields_categories_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_publishedAt {
-  create: ProjectsFields_publishedAt_Create
-  read: ProjectsFields_publishedAt_Read
-  update: ProjectsFields_publishedAt_Update
-  delete: ProjectsFields_publishedAt_Delete
+type EventsFields_publishedAt {
+  create: EventsFields_publishedAt_Create
+  read: EventsFields_publishedAt_Read
+  update: EventsFields_publishedAt_Update
+  delete: EventsFields_publishedAt_Delete
 }
 
-type ProjectsFields_publishedAt_Create {
+type EventsFields_publishedAt_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_publishedAt_Read {
+type EventsFields_publishedAt_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_publishedAt_Update {
+type EventsFields_publishedAt_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_publishedAt_Delete {
+type EventsFields_publishedAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero {
-  create: ProjectsFields_hero_Create
-  read: ProjectsFields_hero_Read
-  update: ProjectsFields_hero_Update
-  delete: ProjectsFields_hero_Delete
-  fields: ProjectsFields_hero_Fields
+type EventsFields_hero {
+  create: EventsFields_hero_Create
+  read: EventsFields_hero_Read
+  update: EventsFields_hero_Update
+  delete: EventsFields_hero_Delete
+  fields: EventsFields_hero_Fields
 }
 
-type ProjectsFields_hero_Create {
+type EventsFields_hero_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_Read {
+type EventsFields_hero_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_Update {
+type EventsFields_hero_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_Delete {
+type EventsFields_hero_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_Fields {
-  type: ProjectsFields_hero_type
-  richText: ProjectsFields_hero_richText
-  links: ProjectsFields_hero_links
-  media: ProjectsFields_hero_media
+type EventsFields_hero_Fields {
+  type: EventsFields_hero_type
+  richText: EventsFields_hero_richText
+  links: EventsFields_hero_links
+  media: EventsFields_hero_media
 }
 
-type ProjectsFields_hero_type {
-  create: ProjectsFields_hero_type_Create
-  read: ProjectsFields_hero_type_Read
-  update: ProjectsFields_hero_type_Update
-  delete: ProjectsFields_hero_type_Delete
+type EventsFields_hero_type {
+  create: EventsFields_hero_type_Create
+  read: EventsFields_hero_type_Read
+  update: EventsFields_hero_type_Update
+  delete: EventsFields_hero_type_Delete
 }
 
-type ProjectsFields_hero_type_Create {
+type EventsFields_hero_type_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_type_Read {
+type EventsFields_hero_type_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_type_Update {
+type EventsFields_hero_type_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_type_Delete {
+type EventsFields_hero_type_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_richText {
-  create: ProjectsFields_hero_richText_Create
-  read: ProjectsFields_hero_richText_Read
-  update: ProjectsFields_hero_richText_Update
-  delete: ProjectsFields_hero_richText_Delete
+type EventsFields_hero_richText {
+  create: EventsFields_hero_richText_Create
+  read: EventsFields_hero_richText_Read
+  update: EventsFields_hero_richText_Update
+  delete: EventsFields_hero_richText_Delete
 }
 
-type ProjectsFields_hero_richText_Create {
+type EventsFields_hero_richText_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_richText_Read {
+type EventsFields_hero_richText_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_richText_Update {
+type EventsFields_hero_richText_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_richText_Delete {
+type EventsFields_hero_richText_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links {
-  create: ProjectsFields_hero_links_Create
-  read: ProjectsFields_hero_links_Read
-  update: ProjectsFields_hero_links_Update
-  delete: ProjectsFields_hero_links_Delete
-  fields: ProjectsFields_hero_links_Fields
+type EventsFields_hero_links {
+  create: EventsFields_hero_links_Create
+  read: EventsFields_hero_links_Read
+  update: EventsFields_hero_links_Update
+  delete: EventsFields_hero_links_Delete
+  fields: EventsFields_hero_links_Fields
 }
 
-type ProjectsFields_hero_links_Create {
+type EventsFields_hero_links_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_Read {
+type EventsFields_hero_links_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_Update {
+type EventsFields_hero_links_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_Delete {
+type EventsFields_hero_links_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_Fields {
-  link: ProjectsFields_hero_links_link
-  id: ProjectsFields_hero_links_id
+type EventsFields_hero_links_Fields {
+  link: EventsFields_hero_links_link
+  id: EventsFields_hero_links_id
 }
 
-type ProjectsFields_hero_links_link {
-  create: ProjectsFields_hero_links_link_Create
-  read: ProjectsFields_hero_links_link_Read
-  update: ProjectsFields_hero_links_link_Update
-  delete: ProjectsFields_hero_links_link_Delete
-  fields: ProjectsFields_hero_links_link_Fields
+type EventsFields_hero_links_link {
+  create: EventsFields_hero_links_link_Create
+  read: EventsFields_hero_links_link_Read
+  update: EventsFields_hero_links_link_Update
+  delete: EventsFields_hero_links_link_Delete
+  fields: EventsFields_hero_links_link_Fields
 }
 
-type ProjectsFields_hero_links_link_Create {
+type EventsFields_hero_links_link_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_Read {
+type EventsFields_hero_links_link_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_Update {
+type EventsFields_hero_links_link_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_Delete {
+type EventsFields_hero_links_link_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_Fields {
-  type: ProjectsFields_hero_links_link_type
-  newTab: ProjectsFields_hero_links_link_newTab
-  reference: ProjectsFields_hero_links_link_reference
-  url: ProjectsFields_hero_links_link_url
-  label: ProjectsFields_hero_links_link_label
-  appearance: ProjectsFields_hero_links_link_appearance
+type EventsFields_hero_links_link_Fields {
+  type: EventsFields_hero_links_link_type
+  newTab: EventsFields_hero_links_link_newTab
+  reference: EventsFields_hero_links_link_reference
+  url: EventsFields_hero_links_link_url
+  label: EventsFields_hero_links_link_label
+  appearance: EventsFields_hero_links_link_appearance
 }
 
-type ProjectsFields_hero_links_link_type {
-  create: ProjectsFields_hero_links_link_type_Create
-  read: ProjectsFields_hero_links_link_type_Read
-  update: ProjectsFields_hero_links_link_type_Update
-  delete: ProjectsFields_hero_links_link_type_Delete
+type EventsFields_hero_links_link_type {
+  create: EventsFields_hero_links_link_type_Create
+  read: EventsFields_hero_links_link_type_Read
+  update: EventsFields_hero_links_link_type_Update
+  delete: EventsFields_hero_links_link_type_Delete
 }
 
-type ProjectsFields_hero_links_link_type_Create {
+type EventsFields_hero_links_link_type_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_type_Read {
+type EventsFields_hero_links_link_type_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_type_Update {
+type EventsFields_hero_links_link_type_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_type_Delete {
+type EventsFields_hero_links_link_type_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_newTab {
-  create: ProjectsFields_hero_links_link_newTab_Create
-  read: ProjectsFields_hero_links_link_newTab_Read
-  update: ProjectsFields_hero_links_link_newTab_Update
-  delete: ProjectsFields_hero_links_link_newTab_Delete
+type EventsFields_hero_links_link_newTab {
+  create: EventsFields_hero_links_link_newTab_Create
+  read: EventsFields_hero_links_link_newTab_Read
+  update: EventsFields_hero_links_link_newTab_Update
+  delete: EventsFields_hero_links_link_newTab_Delete
 }
 
-type ProjectsFields_hero_links_link_newTab_Create {
+type EventsFields_hero_links_link_newTab_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_newTab_Read {
+type EventsFields_hero_links_link_newTab_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_newTab_Update {
+type EventsFields_hero_links_link_newTab_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_newTab_Delete {
+type EventsFields_hero_links_link_newTab_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_reference {
-  create: ProjectsFields_hero_links_link_reference_Create
-  read: ProjectsFields_hero_links_link_reference_Read
-  update: ProjectsFields_hero_links_link_reference_Update
-  delete: ProjectsFields_hero_links_link_reference_Delete
+type EventsFields_hero_links_link_reference {
+  create: EventsFields_hero_links_link_reference_Create
+  read: EventsFields_hero_links_link_reference_Read
+  update: EventsFields_hero_links_link_reference_Update
+  delete: EventsFields_hero_links_link_reference_Delete
 }
 
-type ProjectsFields_hero_links_link_reference_Create {
+type EventsFields_hero_links_link_reference_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_reference_Read {
+type EventsFields_hero_links_link_reference_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_reference_Update {
+type EventsFields_hero_links_link_reference_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_reference_Delete {
+type EventsFields_hero_links_link_reference_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_url {
-  create: ProjectsFields_hero_links_link_url_Create
-  read: ProjectsFields_hero_links_link_url_Read
-  update: ProjectsFields_hero_links_link_url_Update
-  delete: ProjectsFields_hero_links_link_url_Delete
+type EventsFields_hero_links_link_url {
+  create: EventsFields_hero_links_link_url_Create
+  read: EventsFields_hero_links_link_url_Read
+  update: EventsFields_hero_links_link_url_Update
+  delete: EventsFields_hero_links_link_url_Delete
 }
 
-type ProjectsFields_hero_links_link_url_Create {
+type EventsFields_hero_links_link_url_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_url_Read {
+type EventsFields_hero_links_link_url_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_url_Update {
+type EventsFields_hero_links_link_url_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_url_Delete {
+type EventsFields_hero_links_link_url_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_label {
-  create: ProjectsFields_hero_links_link_label_Create
-  read: ProjectsFields_hero_links_link_label_Read
-  update: ProjectsFields_hero_links_link_label_Update
-  delete: ProjectsFields_hero_links_link_label_Delete
+type EventsFields_hero_links_link_label {
+  create: EventsFields_hero_links_link_label_Create
+  read: EventsFields_hero_links_link_label_Read
+  update: EventsFields_hero_links_link_label_Update
+  delete: EventsFields_hero_links_link_label_Delete
 }
 
-type ProjectsFields_hero_links_link_label_Create {
+type EventsFields_hero_links_link_label_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_label_Read {
+type EventsFields_hero_links_link_label_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_label_Update {
+type EventsFields_hero_links_link_label_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_label_Delete {
+type EventsFields_hero_links_link_label_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_appearance {
-  create: ProjectsFields_hero_links_link_appearance_Create
-  read: ProjectsFields_hero_links_link_appearance_Read
-  update: ProjectsFields_hero_links_link_appearance_Update
-  delete: ProjectsFields_hero_links_link_appearance_Delete
+type EventsFields_hero_links_link_appearance {
+  create: EventsFields_hero_links_link_appearance_Create
+  read: EventsFields_hero_links_link_appearance_Read
+  update: EventsFields_hero_links_link_appearance_Update
+  delete: EventsFields_hero_links_link_appearance_Delete
 }
 
-type ProjectsFields_hero_links_link_appearance_Create {
+type EventsFields_hero_links_link_appearance_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_appearance_Read {
+type EventsFields_hero_links_link_appearance_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_appearance_Update {
+type EventsFields_hero_links_link_appearance_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_link_appearance_Delete {
+type EventsFields_hero_links_link_appearance_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_id {
-  create: ProjectsFields_hero_links_id_Create
-  read: ProjectsFields_hero_links_id_Read
-  update: ProjectsFields_hero_links_id_Update
-  delete: ProjectsFields_hero_links_id_Delete
+type EventsFields_hero_links_id {
+  create: EventsFields_hero_links_id_Create
+  read: EventsFields_hero_links_id_Read
+  update: EventsFields_hero_links_id_Update
+  delete: EventsFields_hero_links_id_Delete
 }
 
-type ProjectsFields_hero_links_id_Create {
+type EventsFields_hero_links_id_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_id_Read {
+type EventsFields_hero_links_id_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_id_Update {
+type EventsFields_hero_links_id_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_links_id_Delete {
+type EventsFields_hero_links_id_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_media {
-  create: ProjectsFields_hero_media_Create
-  read: ProjectsFields_hero_media_Read
-  update: ProjectsFields_hero_media_Update
-  delete: ProjectsFields_hero_media_Delete
+type EventsFields_hero_media {
+  create: EventsFields_hero_media_Create
+  read: EventsFields_hero_media_Read
+  update: EventsFields_hero_media_Update
+  delete: EventsFields_hero_media_Delete
 }
 
-type ProjectsFields_hero_media_Create {
+type EventsFields_hero_media_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_media_Read {
+type EventsFields_hero_media_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_media_Update {
+type EventsFields_hero_media_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_hero_media_Delete {
+type EventsFields_hero_media_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_layout {
-  create: ProjectsFields_layout_Create
-  read: ProjectsFields_layout_Read
-  update: ProjectsFields_layout_Update
-  delete: ProjectsFields_layout_Delete
+type EventsFields_layout {
+  create: EventsFields_layout_Create
+  read: EventsFields_layout_Read
+  update: EventsFields_layout_Update
+  delete: EventsFields_layout_Delete
 }
 
-type ProjectsFields_layout_Create {
+type EventsFields_layout_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_layout_Read {
+type EventsFields_layout_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_layout_Update {
+type EventsFields_layout_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_layout_Delete {
+type EventsFields_layout_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_relatedProjects {
-  create: ProjectsFields_relatedProjects_Create
-  read: ProjectsFields_relatedProjects_Read
-  update: ProjectsFields_relatedProjects_Update
-  delete: ProjectsFields_relatedProjects_Delete
+type EventsFields_relatedEvents {
+  create: EventsFields_relatedEvents_Create
+  read: EventsFields_relatedEvents_Read
+  update: EventsFields_relatedEvents_Update
+  delete: EventsFields_relatedEvents_Delete
 }
 
-type ProjectsFields_relatedProjects_Create {
+type EventsFields_relatedEvents_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_relatedProjects_Read {
+type EventsFields_relatedEvents_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_relatedProjects_Update {
+type EventsFields_relatedEvents_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_relatedProjects_Delete {
+type EventsFields_relatedEvents_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_slug {
-  create: ProjectsFields_slug_Create
-  read: ProjectsFields_slug_Read
-  update: ProjectsFields_slug_Update
-  delete: ProjectsFields_slug_Delete
+type EventsFields_slug {
+  create: EventsFields_slug_Create
+  read: EventsFields_slug_Read
+  update: EventsFields_slug_Update
+  delete: EventsFields_slug_Delete
 }
 
-type ProjectsFields_slug_Create {
+type EventsFields_slug_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_slug_Read {
+type EventsFields_slug_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_slug_Update {
+type EventsFields_slug_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_slug_Delete {
+type EventsFields_slug_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_meta {
-  create: ProjectsFields_meta_Create
-  read: ProjectsFields_meta_Read
-  update: ProjectsFields_meta_Update
-  delete: ProjectsFields_meta_Delete
-  fields: ProjectsFields_meta_Fields
+type EventsFields_meta {
+  create: EventsFields_meta_Create
+  read: EventsFields_meta_Read
+  update: EventsFields_meta_Update
+  delete: EventsFields_meta_Delete
+  fields: EventsFields_meta_Fields
 }
 
-type ProjectsFields_meta_Create {
+type EventsFields_meta_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_Read {
+type EventsFields_meta_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_Update {
+type EventsFields_meta_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_Delete {
+type EventsFields_meta_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_Fields {
-  title: ProjectsFields_meta_title
-  description: ProjectsFields_meta_description
-  image: ProjectsFields_meta_image
+type EventsFields_meta_Fields {
+  title: EventsFields_meta_title
+  description: EventsFields_meta_description
+  image: EventsFields_meta_image
 }
 
-type ProjectsFields_meta_title {
-  create: ProjectsFields_meta_title_Create
-  read: ProjectsFields_meta_title_Read
-  update: ProjectsFields_meta_title_Update
-  delete: ProjectsFields_meta_title_Delete
+type EventsFields_meta_title {
+  create: EventsFields_meta_title_Create
+  read: EventsFields_meta_title_Read
+  update: EventsFields_meta_title_Update
+  delete: EventsFields_meta_title_Delete
 }
 
-type ProjectsFields_meta_title_Create {
+type EventsFields_meta_title_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_title_Read {
+type EventsFields_meta_title_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_title_Update {
+type EventsFields_meta_title_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_title_Delete {
+type EventsFields_meta_title_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_description {
-  create: ProjectsFields_meta_description_Create
-  read: ProjectsFields_meta_description_Read
-  update: ProjectsFields_meta_description_Update
-  delete: ProjectsFields_meta_description_Delete
+type EventsFields_meta_description {
+  create: EventsFields_meta_description_Create
+  read: EventsFields_meta_description_Read
+  update: EventsFields_meta_description_Update
+  delete: EventsFields_meta_description_Delete
 }
 
-type ProjectsFields_meta_description_Create {
+type EventsFields_meta_description_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_description_Read {
+type EventsFields_meta_description_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_description_Update {
+type EventsFields_meta_description_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_description_Delete {
+type EventsFields_meta_description_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_image {
-  create: ProjectsFields_meta_image_Create
-  read: ProjectsFields_meta_image_Read
-  update: ProjectsFields_meta_image_Update
-  delete: ProjectsFields_meta_image_Delete
+type EventsFields_meta_image {
+  create: EventsFields_meta_image_Create
+  read: EventsFields_meta_image_Read
+  update: EventsFields_meta_image_Update
+  delete: EventsFields_meta_image_Delete
 }
 
-type ProjectsFields_meta_image_Create {
+type EventsFields_meta_image_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_image_Read {
+type EventsFields_meta_image_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_image_Update {
+type EventsFields_meta_image_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_meta_image_Delete {
+type EventsFields_meta_image_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_updatedAt {
-  create: ProjectsFields_updatedAt_Create
-  read: ProjectsFields_updatedAt_Read
-  update: ProjectsFields_updatedAt_Update
-  delete: ProjectsFields_updatedAt_Delete
+type EventsFields_updatedAt {
+  create: EventsFields_updatedAt_Create
+  read: EventsFields_updatedAt_Read
+  update: EventsFields_updatedAt_Update
+  delete: EventsFields_updatedAt_Delete
 }
 
-type ProjectsFields_updatedAt_Create {
+type EventsFields_updatedAt_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_updatedAt_Read {
+type EventsFields_updatedAt_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_updatedAt_Update {
+type EventsFields_updatedAt_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_updatedAt_Delete {
+type EventsFields_updatedAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields_createdAt {
-  create: ProjectsFields_createdAt_Create
-  read: ProjectsFields_createdAt_Read
-  update: ProjectsFields_createdAt_Update
-  delete: ProjectsFields_createdAt_Delete
+type EventsFields_createdAt {
+  create: EventsFields_createdAt_Create
+  read: EventsFields_createdAt_Read
+  update: EventsFields_createdAt_Update
+  delete: EventsFields_createdAt_Delete
 }
 
-type ProjectsFields_createdAt_Create {
+type EventsFields_createdAt_Create {
   permission: Boolean!
 }
 
-type ProjectsFields_createdAt_Read {
+type EventsFields_createdAt_Read {
   permission: Boolean!
 }
 
-type ProjectsFields_createdAt_Update {
+type EventsFields_createdAt_Update {
   permission: Boolean!
 }
 
-type ProjectsFields_createdAt_Delete {
+type EventsFields_createdAt_Delete {
   permission: Boolean!
 }
 
-type ProjectsFields__status {
-  create: ProjectsFields__status_Create
-  read: ProjectsFields__status_Read
-  update: ProjectsFields__status_Update
-  delete: ProjectsFields__status_Delete
+type EventsFields__status {
+  create: EventsFields__status_Create
+  read: EventsFields__status_Read
+  update: EventsFields__status_Update
+  delete: EventsFields__status_Delete
 }
 
-type ProjectsFields__status_Create {
+type EventsFields__status_Create {
   permission: Boolean!
 }
 
-type ProjectsFields__status_Read {
+type EventsFields__status_Read {
   permission: Boolean!
 }
 
-type ProjectsFields__status_Update {
+type EventsFields__status_Update {
   permission: Boolean!
 }
 
-type ProjectsFields__status_Delete {
+type EventsFields__status_Delete {
   permission: Boolean!
 }
 
-type ProjectsCreateAccess {
+type EventsCreateAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsReadAccess {
+type EventsReadAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsUpdateAccess {
+type EventsUpdateAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsDeleteAccess {
+type EventsDeleteAccess {
   permission: Boolean!
   where: JSONObject
 }
 
-type ProjectsReadVersionsAccess {
+type EventsReadVersionsAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -13041,7 +13041,7 @@ type settingsAccess {
 
 type SettingsFields {
   postsPage: SettingsFields_postsPage
-  projectsPage: SettingsFields_projectsPage
+  eventsPage: SettingsFields_eventsPage
   updatedAt: SettingsFields_updatedAt
   createdAt: SettingsFields_createdAt
 }
@@ -13069,26 +13069,26 @@ type SettingsFields_postsPage_Delete {
   permission: Boolean!
 }
 
-type SettingsFields_projectsPage {
-  create: SettingsFields_projectsPage_Create
-  read: SettingsFields_projectsPage_Read
-  update: SettingsFields_projectsPage_Update
-  delete: SettingsFields_projectsPage_Delete
+type SettingsFields_eventsPage {
+  create: SettingsFields_eventsPage_Create
+  read: SettingsFields_eventsPage_Read
+  update: SettingsFields_eventsPage_Update
+  delete: SettingsFields_eventsPage_Delete
 }
 
-type SettingsFields_projectsPage_Create {
+type SettingsFields_eventsPage_Create {
   permission: Boolean!
 }
 
-type SettingsFields_projectsPage_Read {
+type SettingsFields_eventsPage_Read {
   permission: Boolean!
 }
 
-type SettingsFields_projectsPage_Update {
+type SettingsFields_eventsPage_Update {
   permission: Boolean!
 }
 
-type SettingsFields_projectsPage_Delete {
+type SettingsFields_eventsPage_Delete {
   permission: Boolean!
 }
 
@@ -13691,10 +13691,10 @@ type Mutation {
   updatePost(id: String!, autosave: Boolean, data: mutationPostUpdateInput!, draft: Boolean): Post
   deletePost(id: String!): Post
   restoreVersionPost(id: String): Post
-  createProject(data: mutationProjectInput!, draft: Boolean): Project
-  updateProject(id: String!, autosave: Boolean, data: mutationProjectUpdateInput!, draft: Boolean): Project
-  deleteProject(id: String!): Project
-  restoreVersionProject(id: String): Project
+  createEvent(data: mutationEventInput!, draft: Boolean): Event
+  updateEvent(id: String!, autosave: Boolean, data: mutationEventUpdateInput!, draft: Boolean): Event
+  deleteEvent(id: String!): Event
+  restoreVersionEvent(id: String): Event
   createMedia(data: mutationMediaInput!, draft: Boolean): Media
   updateMedia(id: String!, autosave: Boolean, data: mutationMediaUpdateInput!, draft: Boolean): Media
   deleteMedia(id: String!): Media
@@ -14008,138 +14008,138 @@ enum PostUpdate__status_MutationInput {
   published
 }
 
-input mutationProjectInput {
+input mutationEventInput {
   title: String!
   categories: [String]
   publishedAt: String
-  hero: mutationProject_HeroInput!
+  hero: mutationEvent_HeroInput!
   layout: JSON
-  relatedProjects: [String]
+  relatedEvents: [String]
   slug: String
-  meta: mutationProject_MetaInput
+  meta: mutationEvent_MetaInput
   updatedAt: String
   createdAt: String
-  _status: Project__status_MutationInput
+  _status: Event__status_MutationInput
 }
 
-input mutationProject_HeroInput {
-  type: Project_Hero_type_MutationInput!
+input mutationEvent_HeroInput {
+  type: Event_Hero_type_MutationInput!
   richText: JSON!
-  links: [mutationProject_Hero_LinksInput]
+  links: [mutationEvent_Hero_LinksInput]
   media: String
 }
 
-enum Project_Hero_type_MutationInput {
+enum Event_Hero_type_MutationInput {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-input mutationProject_Hero_LinksInput {
-  link: mutationProject_Hero_Links_LinkInput
+input mutationEvent_Hero_LinksInput {
+  link: mutationEvent_Hero_Links_LinkInput
   id: String
 }
 
-input mutationProject_Hero_Links_LinkInput {
+input mutationEvent_Hero_Links_LinkInput {
   type: String
   newTab: Boolean
-  reference: Project_Hero_Links_Link_ReferenceRelationshipInput
+  reference: Event_Hero_Links_Link_ReferenceRelationshipInput
   url: String
   label: String!
-  appearance: Project_Hero_Links_Link_appearance_MutationInput
+  appearance: Event_Hero_Links_Link_appearance_MutationInput
 }
 
-input Project_Hero_Links_Link_ReferenceRelationshipInput {
-  relationTo: Project_Hero_Links_Link_ReferenceRelationshipInputRelationTo
+input Event_Hero_Links_Link_ReferenceRelationshipInput {
+  relationTo: Event_Hero_Links_Link_ReferenceRelationshipInputRelationTo
   value: JSON
 }
 
-enum Project_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
+enum Event_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
   pages
 }
 
-enum Project_Hero_Links_Link_appearance_MutationInput {
+enum Event_Hero_Links_Link_appearance_MutationInput {
   default
   primary
   secondary
 }
 
-input mutationProject_MetaInput {
+input mutationEvent_MetaInput {
   title: String
   description: String
   image: String
 }
 
-enum Project__status_MutationInput {
+enum Event__status_MutationInput {
   draft
   published
 }
 
-input mutationProjectUpdateInput {
+input mutationEventUpdateInput {
   title: String
   categories: [String]
   publishedAt: String
-  hero: mutationProjectUpdate_HeroInput!
+  hero: mutationEventUpdate_HeroInput!
   layout: JSON
-  relatedProjects: [String]
+  relatedEvents: [String]
   slug: String
-  meta: mutationProjectUpdate_MetaInput
+  meta: mutationEventUpdate_MetaInput
   updatedAt: String
   createdAt: String
-  _status: ProjectUpdate__status_MutationInput
+  _status: EventUpdate__status_MutationInput
 }
 
-input mutationProjectUpdate_HeroInput {
-  type: ProjectUpdate_Hero_type_MutationInput!
+input mutationEventUpdate_HeroInput {
+  type: EventUpdate_Hero_type_MutationInput!
   richText: JSON!
-  links: [mutationProjectUpdate_Hero_LinksInput]
+  links: [mutationEventUpdate_Hero_LinksInput]
   media: String
 }
 
-enum ProjectUpdate_Hero_type_MutationInput {
+enum EventUpdate_Hero_type_MutationInput {
   none
   highImpact
   mediumImpact
   lowImpact
 }
 
-input mutationProjectUpdate_Hero_LinksInput {
-  link: mutationProjectUpdate_Hero_Links_LinkInput
+input mutationEventUpdate_Hero_LinksInput {
+  link: mutationEventUpdate_Hero_Links_LinkInput
   id: String
 }
 
-input mutationProjectUpdate_Hero_Links_LinkInput {
+input mutationEventUpdate_Hero_Links_LinkInput {
   type: String
   newTab: Boolean
-  reference: ProjectUpdate_Hero_Links_Link_ReferenceRelationshipInput
+  reference: EventUpdate_Hero_Links_Link_ReferenceRelationshipInput
   url: String
   label: String!
-  appearance: ProjectUpdate_Hero_Links_Link_appearance_MutationInput
+  appearance: EventUpdate_Hero_Links_Link_appearance_MutationInput
 }
 
-input ProjectUpdate_Hero_Links_Link_ReferenceRelationshipInput {
-  relationTo: ProjectUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo
+input EventUpdate_Hero_Links_Link_ReferenceRelationshipInput {
+  relationTo: EventUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo
   value: JSON
 }
 
-enum ProjectUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
+enum EventUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
   pages
 }
 
-enum ProjectUpdate_Hero_Links_Link_appearance_MutationInput {
+enum EventUpdate_Hero_Links_Link_appearance_MutationInput {
   default
   primary
   secondary
 }
 
-input mutationProjectUpdate_MetaInput {
+input mutationEventUpdate_MetaInput {
   title: String
   description: String
   image: String
 }
 
-enum ProjectUpdate__status_MutationInput {
+enum EventUpdate__status_MutationInput {
   draft
   published
 }
@@ -14344,7 +14344,7 @@ enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
 
 input mutationSettingsInput {
   postsPage: String
-  projectsPage: String
+  eventsPage: String
   updatedAt: String
   createdAt: String
 }

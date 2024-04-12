@@ -10,22 +10,22 @@ import { hero } from '../../fields/hero'
 import { slugField } from '../../fields/slug'
 import { populateArchiveBlock } from '../../hooks/populateArchiveBlock'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
-import { revalidateProject } from './hooks/revalidateProject'
+import { revalidateEvent } from './hooks/revalidateEvents'
 
-export const Projects: CollectionConfig = {
-  slug: 'projects',
+export const Events: CollectionConfig = {
+  slug: 'events',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     preview: doc => {
       return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/next/preview?url=${encodeURIComponent(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/projects/${doc?.slug}`,
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/events/${doc?.slug}`,
       )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
     },
   },
   hooks: {
     beforeChange: [populatePublishedAt],
-    afterChange: [revalidateProject],
+    afterChange: [revalidateEvent],
     afterRead: [populateArchiveBlock],
   },
   versions: {
@@ -80,9 +80,9 @@ export const Projects: CollectionConfig = {
       ],
     },
     {
-      name: 'relatedProjects',
+      name: 'relatedEvents',
       type: 'relationship',
-      relationTo: 'projects',
+      relationTo: 'events',
       hasMany: true,
       filterOptions: ({ id }) => {
         return {

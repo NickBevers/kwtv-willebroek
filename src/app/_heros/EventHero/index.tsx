@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 
-import { Project } from '../../../payload/payload-types'
+import { Event } from '../../../payload/payload-types'
 import { Gutter } from '../../_components/Gutter'
 import { Media } from '../../_components/Media'
 import RichText from '../../_components/RichText'
@@ -9,14 +9,14 @@ import { formatDateTime } from '../../_utilities/formatDateTime'
 
 import classes from './index.module.scss'
 
-export const ProjectHero: React.FC<{
-  project: Project
-}> = ({ project }) => {
-  const { id, title, categories, meta: { image: metaImage, description } = {}, createdAt } = project
+export const EventHero: React.FC<{
+  event: Event
+}> = ({ event }) => {
+  const { id, title, categories, meta: { image: metaImage, description } = {}, createdAt } = event
 
   return (
     <Fragment>
-      <Gutter className={classes.projectHero}>
+      <Gutter className={classes.eventHero}>
         <div className={classes.content}>
           <div className={classes.leader}>
             <div className={classes.categories}>
@@ -45,8 +45,8 @@ export const ProjectHero: React.FC<{
           <h1 className={classes.title}>{title}</h1>
           <div>
             <p className={classes.description}>
-              {`${description ? `${description} ` : ''}To edit this project, `}
-              <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/collections/projects/${id}`}>
+              {`${description ? `${description} ` : ''}To edit this event, `}
+              <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/collections/events/${id}`}>
                 navigate to the admin dashboard
               </Link>
               {'.'}
