@@ -5,13 +5,14 @@ import richText from '../../fields/richText'
 export const Archive: Block = {
   slug: 'archive',
   labels: {
-    singular: 'Archive',
-    plural: 'Archives',
+    singular: 'Grid',
+    plural: 'Grids',
   },
   fields: [
     richText({
       name: 'introContent',
       label: 'Intro Content',
+      required: false,
     }),
     {
       name: 'populateBy',
@@ -60,7 +61,7 @@ export const Archive: Block = {
     {
       type: 'number',
       name: 'limit',
-      label: 'Limit',
+      label: 'Limit (maximum amount of items to show)',
       defaultValue: 10,
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
@@ -99,6 +100,12 @@ export const Archive: Block = {
         description: 'This field is auto-populated after-read',
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
+    },
+    {
+      type: 'checkbox',
+      name: 'showPageRange',
+      label: 'Show Page Range',
+      defaultValue: true,
     },
   ],
 }
