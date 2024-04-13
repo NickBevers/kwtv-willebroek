@@ -117,9 +117,11 @@ export interface Page {
         blockType: 'mediaBlock';
       }
     | {
-        introContent: {
-          [k: string]: unknown;
-        }[];
+        introContent?:
+          | {
+              [k: string]: unknown;
+            }[]
+          | null;
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;
@@ -325,9 +327,11 @@ export interface Post {
         blockType: 'mediaBlock';
       }
     | {
-        introContent: {
-          [k: string]: unknown;
-        }[];
+        introContent?:
+          | {
+              [k: string]: unknown;
+            }[]
+          | null;
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;
@@ -426,9 +430,11 @@ export interface Post {
             blockType: 'mediaBlock';
           }
         | {
-            introContent: {
-              [k: string]: unknown;
-            }[];
+            introContent?:
+              | {
+                  [k: string]: unknown;
+                }[]
+              | null;
             populateBy?: ('collection' | 'selection') | null;
             relationTo?: ('posts' | 'events') | null;
             categories?: (string | Category)[] | null;
@@ -588,9 +594,11 @@ export interface Event {
         blockType: 'mediaBlock';
       }
     | {
-        introContent: {
-          [k: string]: unknown;
-        }[];
+        introContent?:
+          | {
+              [k: string]: unknown;
+            }[]
+          | null;
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: ('posts' | 'events') | null;
         categories?: (string | Category)[] | null;

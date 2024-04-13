@@ -28,6 +28,7 @@ export const PageRange: React.FC<{
   currentPage?: number
   limit?: number
   totalDocs?: number
+  showPageRange?: boolean
 }> = props => {
   const {
     className,
@@ -36,6 +37,7 @@ export const PageRange: React.FC<{
     currentPage,
     limit,
     totalDocs,
+    showPageRange,
   } = props
 
   let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1
@@ -51,6 +53,7 @@ export const PageRange: React.FC<{
     <div className={[className, classes.pageRange].filter(Boolean).join(' ')}>
       {(typeof totalDocs === 'undefined' || totalDocs === 0) && 'Search produced no results.'}
       {typeof totalDocs !== 'undefined' &&
+        showPageRange &&
         totalDocs > 0 &&
         `Showing ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} of ${totalDocs} ${
           totalDocs > 1 ? plural : singular

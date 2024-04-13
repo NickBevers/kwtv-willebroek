@@ -177,6 +177,7 @@ export const CollectionArchive: React.FC<Props> = props => {
                 currentPage={results.page}
                 limit={limit}
                 totalDocs={results.totalDocs}
+                showPageRange={showPageRange}
               />
             </div>
           </Gutter>
@@ -187,7 +188,7 @@ export const CollectionArchive: React.FC<Props> = props => {
               if (typeof result === 'object' && result !== null) {
                 return (
                   <div className={classes.column} key={index}>
-                    <Card doc={result} relationTo={relationTo} showCategories />
+                    <Card doc={result} relationTo={relationTo} />
                   </div>
                 )
               }
