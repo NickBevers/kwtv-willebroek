@@ -10,9 +10,9 @@ import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
 import { postsPage } from './posts-page'
-import { project1 } from './project-1'
-import { project2 } from './project-2'
-import { project3 } from './project-3'
+import { event1 } from './project-1'
+import { event2 } from './project-2'
+import { event3 } from './project-3'
 
 const collections = ['categories', 'media', 'pages', 'posts', 'events']
 const globals = ['header', 'settings', 'footer']
@@ -226,7 +226,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   const project1Doc = await payload.create({
     collection: 'events',
     data: JSON.parse(
-      JSON.stringify({ ...project1, categories: [designCat.id] }).replace(
+      JSON.stringify({ ...event1, categories: [designCat.id] }).replace(
         /"\{\{IMAGE\}\}"/g,
         image2ID,
       ),
@@ -236,7 +236,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   const project2Doc = await payload.create({
     collection: 'events',
     data: JSON.parse(
-      JSON.stringify({ ...project2, categories: [softwareCat.id] }).replace(
+      JSON.stringify({ ...event2, categories: [softwareCat.id] }).replace(
         /"\{\{IMAGE\}\}"/g,
         image2ID,
       ),
@@ -246,7 +246,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   const project3Doc = await payload.create({
     collection: 'events',
     data: JSON.parse(
-      JSON.stringify({ ...project3, categories: [engineeringCat.id] }).replace(
+      JSON.stringify({ ...event3, categories: [engineeringCat.id] }).replace(
         /"\{\{IMAGE\}\}"/g,
         image2ID,
       ),

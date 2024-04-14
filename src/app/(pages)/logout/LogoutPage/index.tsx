@@ -10,7 +10,7 @@ export const LogoutPage: React.FC<{
   settings: Settings
 }> = props => {
   const { settings } = props
-  const { postsPage, EventsPage } = settings || {}
+  const { postsPage, eventsPage } = settings || {}
   const { logout } = useAuth()
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
@@ -47,7 +47,7 @@ export const LogoutPage: React.FC<{
             {hasPostsPage && hasEventsPage && <Fragment>{' or '}</Fragment>}
             {hasEventsPage && (
               <Fragment>
-                <Link href={`/${EventsPage.slug}`}>all events</Link>
+                <Link href={`/${eventsPage.slug}`}>all events</Link>
               </Fragment>
             )}
             {` To log back in, `}

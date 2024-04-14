@@ -347,7 +347,7 @@ type Content_Columns {
   size: Content_Columns_size
   useText: Boolean
   richText(depth: Int): JSON
-  layout: [Content_Columns_Layout!]!
+  layout: [Content_Columns_Layout!]
   enableLink: Boolean
   link: Content_Columns_Link
   id: String

@@ -1,12 +1,12 @@
-import type { Project } from '../payload-types'
+import type { Event } from '../payload-types'
 
-export const project3: Partial<Project> = {
-  title: 'Project 3',
-  slug: 'project-3',
+export const event3: Partial<Event> = {
+  title: 'Event 3',
+  slug: 'event-3',
   _status: 'published',
   meta: {
-    title: 'Project 1',
-    description: 'This is the third project.',
+    title: 'Event 1',
+    description: 'This is the third event.',
     image: '{{IMAGE}}',
   },
   hero: {
@@ -16,7 +16,7 @@ export const project3: Partial<Project> = {
       {
         children: [
           {
-            text: 'Project 3',
+            text: 'Event 3',
           },
         ],
         type: 'h1',
@@ -48,5 +48,5 @@ export const project3: Partial<Project> = {
       ],
     },
   ],
-  relatedProjects: [], // this is populated by the seed script
+  relatedEvents: [], // this is populated by the seed script
 }
