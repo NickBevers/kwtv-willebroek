@@ -48,7 +48,7 @@ const columnFields: Field[] = [
   {
     name: 'layout',
     type: 'blocks',
-    required: true,
+    required: false,
     blocks: [CallToAction, MediaBlock, Archive, CarouselBlock, ButtonBlock],
   },
   {
