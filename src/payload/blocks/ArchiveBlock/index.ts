@@ -9,10 +9,19 @@ export const Archive: Block = {
     plural: 'Grids',
   },
   fields: [
+    {
+      name: 'showDescription',
+      type: 'checkbox',
+      label: 'Show Description',
+      defaultValue: false,
+    },
     richText({
       name: 'introContent',
-      label: 'Intro Content',
+      label: 'Description',
       required: false,
+      admin: {
+        condition: (_, siblingData) => siblingData.showDescription,
+      },
     }),
     {
       name: 'populateBy',

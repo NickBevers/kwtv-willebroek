@@ -117,6 +117,7 @@ export interface Page {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -151,6 +152,7 @@ export interface Page {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
@@ -327,6 +329,7 @@ export interface Post {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -361,6 +364,7 @@ export interface Post {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
@@ -430,6 +434,7 @@ export interface Post {
             blockType: 'mediaBlock';
           }
         | {
+            showDescription?: boolean | null;
             introContent?:
               | {
                   [k: string]: unknown;
@@ -464,6 +469,7 @@ export interface Post {
                 )[]
               | null;
             populatedDocsTotal?: number | null;
+            showPageRange?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'archive';
@@ -594,6 +600,7 @@ export interface Event {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -628,6 +635,7 @@ export interface Event {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';

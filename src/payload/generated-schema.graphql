@@ -566,6 +566,7 @@ input MediaBlock_Media_where_or {
 }
 
 type Archive {
+  showDescription: Boolean
   introContent(depth: Int): JSON
   populateBy: Archive_populateBy
   relationTo: Archive_relationTo
@@ -574,6 +575,7 @@ type Archive {
   selectedDocs: [Archive_SelectedDocs_Relationship!]
   populatedDocs: [Archive_PopulatedDocs_Relationship!]
   populatedDocsTotal: Float
+  showPageRange: Boolean
   id: String
   blockName: String
   blockType: String
