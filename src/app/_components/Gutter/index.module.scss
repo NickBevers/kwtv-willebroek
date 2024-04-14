@@ -11,3 +11,19 @@
 .gutterRight {
   padding-right: var(--gutter-h);
 }
+
+.align{
+  display: flex;
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+}

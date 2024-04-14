@@ -177,6 +177,17 @@ export interface Page {
         blockName?: string | null;
         blockType: 'carouselBlock';
       }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
+      }
   )[];
   slug?: string | null;
   meta?: {
@@ -369,6 +380,17 @@ export interface Post {
         blockName?: string | null;
         blockType: 'archive';
       }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
+      }
   )[];
   enablePremiumContent?: boolean | null;
   premiumContent?:
@@ -473,6 +495,17 @@ export interface Post {
             id?: string | null;
             blockName?: string | null;
             blockType: 'archive';
+          }
+        | {
+            label: string;
+            href?: string | null;
+            newTab: boolean;
+            appearance?: ('default' | 'primary' | 'secondary') | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            invert?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'button';
           }
       )[]
     | null;
@@ -639,6 +672,17 @@ export interface Event {
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
+      }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
       }
   )[];
   relatedEvents?: (string | Event)[] | null;
