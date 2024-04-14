@@ -3,6 +3,11 @@ import type { Block, Field } from 'payload/types'
 import { invertBackground } from '../../fields/invertBackground'
 import link from '../../fields/link'
 import richText from '../../fields/richText'
+import { Archive } from '../ArchiveBlock'
+import { ButtonBlock } from '../ButtonBlock'
+import { CallToAction } from '../CallToAction'
+import { CarouselBlock } from '../CarouselBlock'
+import { MediaBlock } from '../MediaBlock'
 
 const columnFields: Field[] = [
   {
@@ -28,7 +33,24 @@ const columnFields: Field[] = [
       },
     ],
   },
-  richText(),
+  {
+    name: 'useText',
+    type: 'checkbox',
+    label: 'Use Text',
+    defaultValue: false,
+  },
+  richText({
+    required: false,
+    admin: {
+      condition: (_, siblingData) => siblingData.showDescription,
+    },
+  }),
+  {
+    name: 'layout',
+    type: 'blocks',
+    required: true,
+    blocks: [CallToAction, MediaBlock, Archive, CarouselBlock, ButtonBlock],
+  },
   {
     name: 'enableLink',
     type: 'checkbox',

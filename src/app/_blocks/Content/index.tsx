@@ -24,6 +24,8 @@ export const ContentBlock: React.FC<
           columns.map((col, index) => {
             const { enableLink, richText, link, size } = col
 
+            // TODO: Add support for more than rich text (allow other blocks to be added to the content block)
+
             return (
               <div key={index} className={[classes.column, classes[`column--${size}`]].join(' ')}>
                 <RichText content={richText} />

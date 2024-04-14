@@ -345,7 +345,9 @@ type Content {
 
 type Content_Columns {
   size: Content_Columns_size
+  useText: Boolean
   richText(depth: Int): JSON
+  layout: [Content_Columns_Layout!]!
   enableLink: Boolean
   link: Content_Columns_Link
   id: String
@@ -358,36 +360,7 @@ enum Content_Columns_size {
   full
 }
 
-type Content_Columns_Link {
-  type: Content_Columns_Link_type
-  newTab: Boolean
-  reference: Content_Columns_Link_Reference_Relationship
-  url: String
-  label: String
-  appearance: Content_Columns_Link_appearance
-}
-
-enum Content_Columns_Link_type {
-  reference
-  custom
-}
-
-type Content_Columns_Link_Reference_Relationship {
-  relationTo: Content_Columns_Link_Reference_RelationTo
-  value: Content_Columns_Link_Reference
-}
-
-enum Content_Columns_Link_Reference_RelationTo {
-  pages
-}
-
-union Content_Columns_Link_Reference = Page
-
-enum Content_Columns_Link_appearance {
-  default
-  primary
-  secondary
-}
+union Content_Columns_Layout = Cta | MediaBlock | Archive | CarouselBlock | Button
 
 type MediaBlock {
   invertBackground: Boolean
@@ -1682,6 +1655,37 @@ input CarouselBlock_Slides_Image_where_or {
 enum CarouselBlock_position {
   default
   fullscreen
+}
+
+type Content_Columns_Link {
+  type: Content_Columns_Link_type
+  newTab: Boolean
+  reference: Content_Columns_Link_Reference_Relationship
+  url: String
+  label: String
+  appearance: Content_Columns_Link_appearance
+}
+
+enum Content_Columns_Link_type {
+  reference
+  custom
+}
+
+type Content_Columns_Link_Reference_Relationship {
+  relationTo: Content_Columns_Link_Reference_RelationTo
+  value: Content_Columns_Link_Reference
+}
+
+enum Content_Columns_Link_Reference_RelationTo {
+  pages
+}
+
+union Content_Columns_Link_Reference = Page
+
+enum Content_Columns_Link_appearance {
+  default
+  primary
+  secondary
 }
 
 type Page_Meta {
