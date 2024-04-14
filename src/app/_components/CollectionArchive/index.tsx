@@ -183,9 +183,10 @@ export const CollectionArchive: React.FC<Props> = props => {
           </Gutter>
         )}
         <Gutter>
+          {/* <p>{JSON.stringify(results.docs)}</p> */}
           <div className={classes.grid}>
             {results.docs?.map((result, index) => {
-              if (typeof result === 'object' && result !== null) {
+              if (typeof result === 'object' && result !== null && result._status !== 'draft') {
                 return (
                   <div className={classes.column} key={index}>
                     <Card doc={result} relationTo={relationTo} />

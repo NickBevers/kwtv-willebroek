@@ -50,7 +50,7 @@ export default async function Page({ params: { slug = 'home' } }) {
 
   const { hero, layout } = page
 
-  // /* eslint-disable no-console */
+  /* eslint-disable no-console */
   // console.log(layout)
 
   return (

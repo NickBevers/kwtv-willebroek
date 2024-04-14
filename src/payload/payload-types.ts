@@ -86,9 +86,119 @@ export interface Page {
         columns?:
           | {
               size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-              richText: {
-                [k: string]: unknown;
-              }[];
+              useText?: boolean | null;
+              richText?:
+                | {
+                    [k: string]: unknown;
+                  }[]
+                | null;
+              layout: (
+                | {
+                    invertBackground?: boolean | null;
+                    richText: {
+                      [k: string]: unknown;
+                    }[];
+                    links?:
+                      | {
+                          link: {
+                            type?: ('reference' | 'custom') | null;
+                            newTab?: boolean | null;
+                            reference?: {
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null;
+                            url?: string | null;
+                            label: string;
+                            appearance?: ('primary' | 'secondary') | null;
+                          };
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'cta';
+                  }
+                | {
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    media: string | Media;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'mediaBlock';
+                  }
+                | {
+                    showDescription?: boolean | null;
+                    introContent?:
+                      | {
+                          [k: string]: unknown;
+                        }[]
+                      | null;
+                    populateBy?: ('collection' | 'selection') | null;
+                    relationTo?: ('posts' | 'events') | null;
+                    categories?: (string | Category)[] | null;
+                    limit?: number | null;
+                    selectedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocsTotal?: number | null;
+                    showPageRange?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'archive';
+                  }
+                | {
+                    slides?:
+                      | {
+                          image: string | Media;
+                          caption?: string | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    showArrows?: boolean | null;
+                    showDots?: boolean | null;
+                    autoplay?: boolean | null;
+                    autoplaySpeed?: number | null;
+                    pauseOnHover?: boolean | null;
+                    height?: number | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'carouselBlock';
+                  }
+                | {
+                    label: string;
+                    href?: string | null;
+                    newTab: boolean;
+                    appearance?: ('default' | 'primary' | 'secondary') | null;
+                    alignment?: ('left' | 'center' | 'right') | null;
+                    invert?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'button';
+                  }
+              )[];
               enableLink?: boolean | null;
               link?: {
                 type?: ('reference' | 'custom') | null;
@@ -117,6 +227,7 @@ export interface Page {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -151,6 +262,7 @@ export interface Page {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
@@ -174,6 +286,17 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'carouselBlock';
+      }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
       }
   )[];
   slug?: string | null;
@@ -296,9 +419,119 @@ export interface Post {
         columns?:
           | {
               size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-              richText: {
-                [k: string]: unknown;
-              }[];
+              useText?: boolean | null;
+              richText?:
+                | {
+                    [k: string]: unknown;
+                  }[]
+                | null;
+              layout: (
+                | {
+                    invertBackground?: boolean | null;
+                    richText: {
+                      [k: string]: unknown;
+                    }[];
+                    links?:
+                      | {
+                          link: {
+                            type?: ('reference' | 'custom') | null;
+                            newTab?: boolean | null;
+                            reference?: {
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null;
+                            url?: string | null;
+                            label: string;
+                            appearance?: ('primary' | 'secondary') | null;
+                          };
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'cta';
+                  }
+                | {
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    media: string | Media;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'mediaBlock';
+                  }
+                | {
+                    showDescription?: boolean | null;
+                    introContent?:
+                      | {
+                          [k: string]: unknown;
+                        }[]
+                      | null;
+                    populateBy?: ('collection' | 'selection') | null;
+                    relationTo?: ('posts' | 'events') | null;
+                    categories?: (string | Category)[] | null;
+                    limit?: number | null;
+                    selectedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocsTotal?: number | null;
+                    showPageRange?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'archive';
+                  }
+                | {
+                    slides?:
+                      | {
+                          image: string | Media;
+                          caption?: string | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    showArrows?: boolean | null;
+                    showDots?: boolean | null;
+                    autoplay?: boolean | null;
+                    autoplaySpeed?: number | null;
+                    pauseOnHover?: boolean | null;
+                    height?: number | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'carouselBlock';
+                  }
+                | {
+                    label: string;
+                    href?: string | null;
+                    newTab: boolean;
+                    appearance?: ('default' | 'primary' | 'secondary') | null;
+                    alignment?: ('left' | 'center' | 'right') | null;
+                    invert?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'button';
+                  }
+              )[];
               enableLink?: boolean | null;
               link?: {
                 type?: ('reference' | 'custom') | null;
@@ -327,6 +560,7 @@ export interface Post {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -361,9 +595,21 @@ export interface Post {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
+      }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
       }
   )[];
   enablePremiumContent?: boolean | null;
@@ -399,9 +645,119 @@ export interface Post {
             columns?:
               | {
                   size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-                  richText: {
-                    [k: string]: unknown;
-                  }[];
+                  useText?: boolean | null;
+                  richText?:
+                    | {
+                        [k: string]: unknown;
+                      }[]
+                    | null;
+                  layout: (
+                    | {
+                        invertBackground?: boolean | null;
+                        richText: {
+                          [k: string]: unknown;
+                        }[];
+                        links?:
+                          | {
+                              link: {
+                                type?: ('reference' | 'custom') | null;
+                                newTab?: boolean | null;
+                                reference?: {
+                                  relationTo: 'pages';
+                                  value: string | Page;
+                                } | null;
+                                url?: string | null;
+                                label: string;
+                                appearance?: ('primary' | 'secondary') | null;
+                              };
+                              id?: string | null;
+                            }[]
+                          | null;
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'cta';
+                      }
+                    | {
+                        invertBackground?: boolean | null;
+                        position?: ('default' | 'fullscreen') | null;
+                        media: string | Media;
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'mediaBlock';
+                      }
+                    | {
+                        showDescription?: boolean | null;
+                        introContent?:
+                          | {
+                              [k: string]: unknown;
+                            }[]
+                          | null;
+                        populateBy?: ('collection' | 'selection') | null;
+                        relationTo?: ('posts' | 'events') | null;
+                        categories?: (string | Category)[] | null;
+                        limit?: number | null;
+                        selectedDocs?:
+                          | (
+                              | {
+                                  relationTo: 'posts';
+                                  value: string | Post;
+                                }
+                              | {
+                                  relationTo: 'events';
+                                  value: string | Event;
+                                }
+                            )[]
+                          | null;
+                        populatedDocs?:
+                          | (
+                              | {
+                                  relationTo: 'posts';
+                                  value: string | Post;
+                                }
+                              | {
+                                  relationTo: 'events';
+                                  value: string | Event;
+                                }
+                            )[]
+                          | null;
+                        populatedDocsTotal?: number | null;
+                        showPageRange?: boolean | null;
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'archive';
+                      }
+                    | {
+                        slides?:
+                          | {
+                              image: string | Media;
+                              caption?: string | null;
+                              id?: string | null;
+                            }[]
+                          | null;
+                        invertBackground?: boolean | null;
+                        position?: ('default' | 'fullscreen') | null;
+                        showArrows?: boolean | null;
+                        showDots?: boolean | null;
+                        autoplay?: boolean | null;
+                        autoplaySpeed?: number | null;
+                        pauseOnHover?: boolean | null;
+                        height?: number | null;
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'carouselBlock';
+                      }
+                    | {
+                        label: string;
+                        href?: string | null;
+                        newTab: boolean;
+                        appearance?: ('default' | 'primary' | 'secondary') | null;
+                        alignment?: ('left' | 'center' | 'right') | null;
+                        invert?: boolean | null;
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'button';
+                      }
+                  )[];
                   enableLink?: boolean | null;
                   link?: {
                     type?: ('reference' | 'custom') | null;
@@ -430,6 +786,7 @@ export interface Post {
             blockType: 'mediaBlock';
           }
         | {
+            showDescription?: boolean | null;
             introContent?:
               | {
                   [k: string]: unknown;
@@ -464,9 +821,21 @@ export interface Post {
                 )[]
               | null;
             populatedDocsTotal?: number | null;
+            showPageRange?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'archive';
+          }
+        | {
+            label: string;
+            href?: string | null;
+            newTab: boolean;
+            appearance?: ('default' | 'primary' | 'secondary') | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            invert?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'button';
           }
       )[]
     | null;
@@ -563,9 +932,119 @@ export interface Event {
         columns?:
           | {
               size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-              richText: {
-                [k: string]: unknown;
-              }[];
+              useText?: boolean | null;
+              richText?:
+                | {
+                    [k: string]: unknown;
+                  }[]
+                | null;
+              layout: (
+                | {
+                    invertBackground?: boolean | null;
+                    richText: {
+                      [k: string]: unknown;
+                    }[];
+                    links?:
+                      | {
+                          link: {
+                            type?: ('reference' | 'custom') | null;
+                            newTab?: boolean | null;
+                            reference?: {
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null;
+                            url?: string | null;
+                            label: string;
+                            appearance?: ('primary' | 'secondary') | null;
+                          };
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'cta';
+                  }
+                | {
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    media: string | Media;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'mediaBlock';
+                  }
+                | {
+                    showDescription?: boolean | null;
+                    introContent?:
+                      | {
+                          [k: string]: unknown;
+                        }[]
+                      | null;
+                    populateBy?: ('collection' | 'selection') | null;
+                    relationTo?: ('posts' | 'events') | null;
+                    categories?: (string | Category)[] | null;
+                    limit?: number | null;
+                    selectedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocs?:
+                      | (
+                          | {
+                              relationTo: 'posts';
+                              value: string | Post;
+                            }
+                          | {
+                              relationTo: 'events';
+                              value: string | Event;
+                            }
+                        )[]
+                      | null;
+                    populatedDocsTotal?: number | null;
+                    showPageRange?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'archive';
+                  }
+                | {
+                    slides?:
+                      | {
+                          image: string | Media;
+                          caption?: string | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    invertBackground?: boolean | null;
+                    position?: ('default' | 'fullscreen') | null;
+                    showArrows?: boolean | null;
+                    showDots?: boolean | null;
+                    autoplay?: boolean | null;
+                    autoplaySpeed?: number | null;
+                    pauseOnHover?: boolean | null;
+                    height?: number | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'carouselBlock';
+                  }
+                | {
+                    label: string;
+                    href?: string | null;
+                    newTab: boolean;
+                    appearance?: ('default' | 'primary' | 'secondary') | null;
+                    alignment?: ('left' | 'center' | 'right') | null;
+                    invert?: boolean | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'button';
+                  }
+              )[];
               enableLink?: boolean | null;
               link?: {
                 type?: ('reference' | 'custom') | null;
@@ -594,6 +1073,7 @@ export interface Event {
         blockType: 'mediaBlock';
       }
     | {
+        showDescription?: boolean | null;
         introContent?:
           | {
               [k: string]: unknown;
@@ -628,9 +1108,21 @@ export interface Event {
             )[]
           | null;
         populatedDocsTotal?: number | null;
+        showPageRange?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'archive';
+      }
+    | {
+        label: string;
+        href?: string | null;
+        newTab: boolean;
+        appearance?: ('default' | 'primary' | 'secondary') | null;
+        alignment?: ('left' | 'center' | 'right') | null;
+        invert?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
       }
   )[];
   relatedEvents?: (string | Event)[] | null;

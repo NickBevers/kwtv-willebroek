@@ -99,3 +99,15 @@ export const CAROUSEL_BLOCK = `
   height
 }
 `
+
+export const BUTTON_BLOCK = `
+...on Button {
+  blockType
+  label
+  href
+  newTab
+  appearance
+  alignment
+  invert
+}
+`

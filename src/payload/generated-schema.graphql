@@ -289,7 +289,7 @@ input Page_Hero_Media_where_or {
   OR: [Page_Hero_Media_where_or]
 }
 
-union Page_Layout = Cta | Content | MediaBlock | Archive | CarouselBlock
+union Page_Layout = Cta | Content | MediaBlock | Archive | CarouselBlock | Button
 
 type Cta {
   invertBackground: Boolean
@@ -345,7 +345,9 @@ type Content {
 
 type Content_Columns {
   size: Content_Columns_size
+  useText: Boolean
   richText(depth: Int): JSON
+  layout: [Content_Columns_Layout!]!
   enableLink: Boolean
   link: Content_Columns_Link
   id: String
@@ -358,36 +360,7 @@ enum Content_Columns_size {
   full
 }
 
-type Content_Columns_Link {
-  type: Content_Columns_Link_type
-  newTab: Boolean
-  reference: Content_Columns_Link_Reference_Relationship
-  url: String
-  label: String
-  appearance: Content_Columns_Link_appearance
-}
-
-enum Content_Columns_Link_type {
-  reference
-  custom
-}
-
-type Content_Columns_Link_Reference_Relationship {
-  relationTo: Content_Columns_Link_Reference_RelationTo
-  value: Content_Columns_Link_Reference
-}
-
-enum Content_Columns_Link_Reference_RelationTo {
-  pages
-}
-
-union Content_Columns_Link_Reference = Page
-
-enum Content_Columns_Link_appearance {
-  default
-  primary
-  secondary
-}
+union Content_Columns_Layout = Cta | MediaBlock | Archive | CarouselBlock | Button
 
 type MediaBlock {
   invertBackground: Boolean
@@ -566,6 +539,7 @@ input MediaBlock_Media_where_or {
 }
 
 type Archive {
+  showDescription: Boolean
   introContent(depth: Int): JSON
   populateBy: Archive_populateBy
   relationTo: Archive_relationTo
@@ -574,6 +548,7 @@ type Archive {
   selectedDocs: [Archive_SelectedDocs_Relationship!]
   populatedDocs: [Archive_PopulatedDocs_Relationship!]
   populatedDocsTotal: Float
+  showPageRange: Boolean
   id: String
   blockName: String
   blockType: String
@@ -879,9 +854,33 @@ input Post_Hero_Media_where_or {
   OR: [Post_Hero_Media_where_or]
 }
 
-union Post_Layout = Cta | Content | MediaBlock | Archive
+union Post_Layout = Cta | Content | MediaBlock | Archive | Button
 
-union Post_PremiumContent = Cta | Content | MediaBlock | Archive
+type Button {
+  label: String
+  href: String
+  newTab: Boolean
+  appearance: Button_appearance
+  alignment: Button_alignment
+  invert: Boolean
+  id: String
+  blockName: String
+  blockType: String
+}
+
+enum Button_appearance {
+  default
+  primary
+  secondary
+}
+
+enum Button_alignment {
+  left
+  center
+  right
+}
+
+union Post_PremiumContent = Cta | Content | MediaBlock | Archive | Button
 
 type Post_Meta {
   title: String
@@ -1283,7 +1282,7 @@ input Event_Hero_Media_where_or {
   OR: [Event_Hero_Media_where_or]
 }
 
-union Event_Layout = Cta | Content | MediaBlock | Archive
+union Event_Layout = Cta | Content | MediaBlock | Archive | Button
 
 type Event_Meta {
   title: String
@@ -1656,6 +1655,37 @@ input CarouselBlock_Slides_Image_where_or {
 enum CarouselBlock_position {
   default
   fullscreen
+}
+
+type Content_Columns_Link {
+  type: Content_Columns_Link_type
+  newTab: Boolean
+  reference: Content_Columns_Link_Reference_Relationship
+  url: String
+  label: String
+  appearance: Content_Columns_Link_appearance
+}
+
+enum Content_Columns_Link_type {
+  reference
+  custom
+}
+
+type Content_Columns_Link_Reference_Relationship {
+  relationTo: Content_Columns_Link_Reference_RelationTo
+  value: Content_Columns_Link_Reference
+}
+
+enum Content_Columns_Link_Reference_RelationTo {
+  pages
+}
+
+union Content_Columns_Link_Reference = Page
+
+enum Content_Columns_Link_appearance {
+  default
+  primary
+  secondary
 }
 
 type Page_Meta {
@@ -2992,7 +3022,7 @@ input PageVersion_Version_Hero_Media_where_or {
   OR: [PageVersion_Version_Hero_Media_where_or]
 }
 
-union PageVersion_Version_Layout = Cta | Content | MediaBlock | Archive | CarouselBlock
+union PageVersion_Version_Layout = Cta | Content | MediaBlock | Archive | CarouselBlock | Button
 
 type PageVersion_Version_Meta {
   title: String
@@ -4946,9 +4976,9 @@ input PostVersion_Version_Hero_Media_where_or {
   OR: [PostVersion_Version_Hero_Media_where_or]
 }
 
-union PostVersion_Version_Layout = Cta | Content | MediaBlock | Archive
+union PostVersion_Version_Layout = Cta | Content | MediaBlock | Archive | Button
 
-union PostVersion_Version_PremiumContent = Cta | Content | MediaBlock | Archive
+union PostVersion_Version_PremiumContent = Cta | Content | MediaBlock | Archive | Button
 
 type PostVersion_Version_Meta {
   title: String
@@ -6769,7 +6799,7 @@ input EventVersion_Version_Hero_Media_where_or {
   OR: [EventVersion_Version_Hero_Media_where_or]
 }
 
-union EventVersion_Version_Layout = Cta | Content | MediaBlock | Archive
+union EventVersion_Version_Layout = Cta | Content | MediaBlock | Archive | Button
 
 type EventVersion_Version_Meta {
   title: String

@@ -8,10 +8,11 @@ type Props = {
   className?: string
   children: React.ReactNode
   ref?: Ref<HTMLDivElement>
+  alignContent?: 'left' | 'center' | 'right'
 }
 
 export const Gutter: React.FC<Props> = forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { left = true, right = true, className, children } = props
+  const { left = true, right = true, className, children, alignContent } = props
 
   return (
     <div
@@ -21,6 +22,8 @@ export const Gutter: React.FC<Props> = forwardRef<HTMLDivElement, Props>((props,
         left && classes.gutterLeft,
         right && classes.gutterRight,
         className,
+        alignContent && classes.align,
+        classes[`align--${alignContent}`],
       ]
         .filter(Boolean)
         .join(' ')}
